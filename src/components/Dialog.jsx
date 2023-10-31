@@ -8,6 +8,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import MailForm from './MailForm';
+import { Box, ButtonGroup, NativeSelect, Select } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -15,6 +19,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
+    justifyContent:'space-between'
   },
 }));
 
@@ -34,8 +39,8 @@ const handlex=(event)=>{
         aria-labelledby="customized-dialog-title"
         open={props.open}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+        <DialogTitle sx={{ m: 0, p: 2,background:'#d4e0f1' }} id="customized-dialog-title">
+          New Message
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -50,27 +55,60 @@ const handlex=(event)=>{
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
+          <MailForm/>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
-          </Typography>
+          
+              </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
+           
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handlex}>
-            Save changes
+          
+           <ButtonWrap>
+            <ButtonGroup>
+          <Button autoFocus onClick={handlex}  variant="contained" color="primary">
+            Send
+    
+            
           </Button>
+          <Button size='small'>
+            <ExpandMoreIcon/>
+          </Button>
+          </ButtonGroup>
+          
+         
+          
+          </ButtonWrap>
+          
+          <Button>
+            <DeleteForeverIcon/>
+          </Button>
+          
         </DialogActions>
       </BootstrapDialog>
     </div>
   );
 }
+
+const ButtonWrap=styled(Box)({
+  display:'flex',
+  alignItems:'center',
+  
+ 
+  "&>Button:first-child":{
+    marginLeft:10,
+    borderRadius:18
+  }
+
+});
+
+const ScheduleButton=styled(NativeSelect)({
+  width:'10',
+  height:'min-content',
+
+  "& > *":{
+    minWidth:10
+  }
+
+})

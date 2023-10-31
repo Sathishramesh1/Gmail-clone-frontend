@@ -7,6 +7,8 @@ import { Box, List } from '@mui/material';
 import styled from '@emotion/styled';
 import {Container} from '@mui/material';
 import { ListItemButton } from '@mui/material';
+import RigthSideIcon from './components/RigthSideIcon';
+import LeftIconBar from './components/SideBars/LeftIconBar';
 
 function App() {
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -22,12 +24,12 @@ function App() {
       
       <Sidebar openDrawer={openDrawer}/>
       <Main>
-      <IconBar>
-        iconbar
-      </IconBar>
+      <LeftIconBarWrapper>
+        <LeftIconBar/>
+      </LeftIconBarWrapper>
       <Box sx={{paddingLeft:0, height:'100vh',background:'blue', overflowY:""}} >
         <Box>
-          selct iocn
+         icon
         </Box>
       <Box sx={{ display: 'flex', flexDirection:'column', width:'100%',
     background:'green',height:'50px'
@@ -46,9 +48,9 @@ function App() {
         </Box>
           
       </Box>
-      <SideIcon>
-
-      </SideIcon>
+      <RigthSideIconBar>
+         <RigthSideIcon/>
+      </RigthSideIconBar>
       </Main>
       
       </Layout>
@@ -75,18 +77,19 @@ const Main=styled(Box)({
   height:'100vh',
  
  })
-const SideIcon=styled(Box)({
+const RigthSideIconBar=styled(Box)({
    display:'flex',
    flexDirection:'column',
-   background:'red',
-   height:'100vh'
+  
+   height:'100vh',
+   backgroundColor:"#f2f5fa"
  });
 
- const IconBar=styled(Box)({
+ const LeftIconBarWrapper=styled(Box)({
   display:'flex',
   flexDirection:'column',
   height:'100vh',
-  background:'#f5f5f5'
+  // background:'yellow'
 })
 
  

@@ -1,5 +1,5 @@
 import { Drawer } from "@mui/material";
-import SideBarItem from './SideBarItem';
+import SideBarItem from './RigthSideIcon';
 import SideBarIcons from "./SideBarIcons";
 
 const Sidebar = ({openDrawer}) => {

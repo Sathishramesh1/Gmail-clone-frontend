@@ -23,7 +23,7 @@ const [open, setOpen] = useState(false);
   return (
     <SideIconWrapper>
        <ComposeWrapper>
-       <Button  size='large' onClick={handleClickOpen}  >
+       <Button  size='large' onClick={ handleClickOpen}  >
         <Compose>
         <CreateIcon/>
           Compose
