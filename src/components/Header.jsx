@@ -50,6 +50,7 @@ export default Header;
 const StyledAppBar = styled(AppBar)({
   background: "#f5f5f5",
   boxShadow: "none",
+  height:'64px !important'
   // width: "100vw ",
 
  
@@ -84,10 +85,13 @@ const SearchRapper = styled(Box)({
 
 const IconsWrapper = styled(Box)({
 
-  display: "flex",
-  justifyContent: "center",
+  display: "grid",
+  // justifyContent: "center",
+  width:"70%",
+  gridTemplateRows:"repeat(4,30)",
   background: "#f5f5f5",
-  gap:20,
+  marginLeft:'30%',
+  // gap:20,
   " & > div":{
     
   }

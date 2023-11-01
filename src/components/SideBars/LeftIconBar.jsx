@@ -13,7 +13,7 @@ import ScheduleSendIcon from "@mui/icons-material/ScheduleSend";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import ReportGmailerrorredIcon from "@mui/icons-material/ReportGmailerrorred";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Box, IconButton, styled } from '@mui/material';
+import { Box, Button,  styled } from '@mui/material';
 
 
 
@@ -24,45 +24,47 @@ function LeftIconBar() {
   return (
     <div>
         <Wrapper>
-            <IconButton>
+          <Compose>
+            <Box variant='black'>
       <CreateIcon />
-      </IconButton>
-      <IconButton>
+      </Box>
+      </Compose>
+      <Button variant='black'> 
       <InboxIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <StarBorderIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <SendIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <InsertDriveFileIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <LabelImportantIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <DeleteOutlineIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <AccessTimeIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <ChatBubbleOutlineIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <ScheduleSendIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <MailOutlineIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <ReportGmailerrorredIcon />
-      </IconButton>
-      <IconButton>
+      </Button>
+      <Button variant='black'>
       <SettingsIcon />
-      </IconButton>
+      </Button>
       </Wrapper>
 
 
@@ -77,19 +79,47 @@ export default LeftIconBar
 const Wrapper=styled(Box)({
      display:'flex',
      flexDirection:'column',
-     padding:"5px",
-     paddingTop:"23px",
+     padding:"0px",
+     paddingTop:"5px",
      marginLeft:'2px',
      alignItems:'flex-start',
-     
-     
-     "& >*":{
-      color:'black'
+     rowGap:5,
+      
+    //  "& > *":{
+    //   border: 'none',
+    //   outline: 'none',
+      
+    //  },
+     "& > *:focus":{
+      border: 'none',
+      outline: 'none',
+      background:'#c2e7ff',
      },
-
-     "& >:first-child":{
-        width:56,
-        heigth:56,
-        paddingBottom:15
+     "& > *:hover":{
+      border: 'none',
+      outline: 'none',
+      background:'#c2e7ff',
+      borderRadius:40
      }
+
+     
+});
+
+const Compose=styled(Box)({
+  display:'flex',
+  justifyContent:'center',
+  width:56,
+  height:56,
+  borderRadius:15,
+  background:'#c2e7ff',
+  border:'none',
+
+  
+  "& >button:focus":{
+    border: 'none',
+         outline: 'none'
+  }
+
+
+
 })
