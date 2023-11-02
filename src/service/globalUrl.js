@@ -52,6 +52,15 @@ export const API_URLS = {
     endpoint: "mail/upload",
     method: "POST",
 
+  },
+  getLogin:{
+    endpoint:"api/login",
+    method:'POST'
+  },
+  getRegister:{
+    endpoint:"api/register",
+    method:'POST'
+
   }
   
 };
