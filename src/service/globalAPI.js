@@ -1,48 +1,19 @@
-export const API_URLS = {
-    compose: {
-      endpoint: "mail/send",
-      method: "POST",
-    },
-    getEmailFromInbox: {
-      endpoint: "mail/inbox",
-      method: "GET",
-    },
-    getEmailFromSend:{
-        endpoint: "mail/send",
-        method: "GET",
+import axios from "axios";
 
-    },
-    getEmailFromDraft:{
-        endpoint: "mail/getdraft",
-        method: "GET",
+const API_URL = `https://gmail-clone-yppd.onrender.com`;
 
-    },
-    getEmailFromStarred:{
-        endpoint: "mail/starred",
-        method: "GET",
-
-    },
- 
-    getEmailFromTrash:{
-        endpoint: "mail/trash",
-        method: "GET",
-
-    },
-    saveDraftEmails: {
-      endpoint: "mail/draft",
-      method: "POST",
-    },
-    deleteEmail: {
-      endpoint: "mail/delete/:messageid",
-      method: "DELETE",
-    },
-    toggleStarredEmail:{
-      endpoint: "mail/starred/:messageid",
-      method: "POST",
-    },
-    deleteEmails:{
-      endpoint:'delete',
-      method: 'DELETE',
+const API_GMAIL = async (urlObject, payload,token) => {
+  return await axios({
+    method: urlObject.method,
+    url: `${API_URL}/${urlObject.endpoint}` ,
+    data: payload, // initially it was {} payload
+    headers:{
+      "x-auth-token":'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2U4MWY5ODFhNmJiMzk3N2Y0YTkzNyIsImlhdCI6MTY5ODkwNzM4M30.AUlEW00xPud50EnoijcLshbWIEX6XDuA4RuXLhC5mbE'
     }
-  };
-  
+  });
+};
+
+export default API_GMAIL;
+
+
+

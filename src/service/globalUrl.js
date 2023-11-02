@@ -1,13 +1,57 @@
-import axios from "axios";
+export const API_URLS = {
+  compose: {
+    endpoint: "mail/send",
+    method: "POST",
+  },
+  getInboxEmial: {
+    endpoint: "mail/inbox",
+    method: "GET",
+  },
+  getSendEmail:{
+      endpoint: "mail/send",
+      method: "GET",
 
-const API_URL = `http://localhost:8080`;
+  },
+  getDraftEmail:{
+      endpoint: "mail/getdraft",
+      method: "GET",
 
-const API_GMAIL = async (urlObject, payload, type) => {
-  return await axios({
-    method: urlObject.method,
-    url: `${API_URL}/${urlObject.endpoint}/${type}`,
-    data: payload, // initially it was {} payload
-  });
+  },
+  getStarredEmail:{
+      endpoint: "mail/starred",
+      method: "GET",
+
+  },
+  getImportantEmail:{
+    endpoint: "mail/important",
+    method: "GET",
+
+},
+  getTrashEmail:{
+      endpoint: "mail/trash",
+      method: "GET",
+
+  },
+  saveDraftEmails: {
+    endpoint: "mail/draft",
+    method: "POST",
+  },
+  deleteEmail: {
+    endpoint: "mail/delete/:messageid",
+    method: "DELETE",
+  },
+  toggleStarredEmail:{
+    endpoint: "mail/starred/:messageid",
+    method: "PATCH",
+  },
+  toggleImportantEmail:{
+    endpoint: "mail/important/:messageid",
+    method: "PATCH",
+  },
+  uploadFile:{
+    endpoint: "mail/upload",
+    method: "POST",
+
+  }
+  
 };
-
-export default API_GMAIL;

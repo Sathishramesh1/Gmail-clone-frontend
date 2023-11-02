@@ -11,6 +11,9 @@ import RigthSideIcon from './components/RigthSideIcon';
 import LeftIconBar from './components/SideBars/LeftIconBar';
 import MailHeader from './components/MailComponent/MailHeader';
 import Inbox from './components/Inbox';
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+import SendBox from './components/SideBars/SendBox';
+import SignIn from './pages/Login';
 
 function App() {
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -45,7 +48,14 @@ function App() {
         </TabBar>
       <MailContainer >
       <Box sx={{display:'flex', width:'98%'}}>
-        <Inbox/>
+        <BrowserRouter>
+        <Routes>
+                <Route exact path='/' Component={Inbox}/>
+                <Route path='/send' Component={SendBox}/>
+              
+        </Routes>
+        
+        </BrowserRouter>
         
 
       </Box>
