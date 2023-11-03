@@ -41,7 +41,7 @@ const defaultTheme = createTheme();
 export default function SignIn() {
 
   const dispatch=useDispatch();
-  const email=useSelector(state=>state.email);
+  
 
     const navigate=useNavigate();
     const[user,setUser]=useState({
@@ -53,19 +53,22 @@ export default function SignIn() {
 
   //function to handle login
   const handleSubmit =async(event) => {
+   
     event.preventDefault();
     try {
-         toast.loading("Please wait...",{
-            position: toast.POSITION.TOP_CENTER });
+     
+        //  toast.loading("Please wait...",{
+        //     position: toast.POSITION.TOP_CENTER });
 
   const res= await getlogin.call(user,'');
-  const token=res.data.jwttoken
-     
-
-     dispatch(setToken(token));
-     toast.dismiss();
+  
+     console.log(res);
+  
         event.target.reset();
         if(res.status){
+          const token=res.data.jwttoken
+          dispatch(setToken(token));
+          localStorage.setItem('token',token);
         toast.success("Login Successfully", {
             position: "top-center",
             autoClose: 1500,
@@ -76,7 +79,7 @@ export default function SignIn() {
             progress: undefined,
             theme: "colored",
           });
-          navigate('/protected/inbox');
+          navigate("/protected");
          
         }else{
           toast.error("Unable to Login", {
@@ -105,7 +108,7 @@ export default function SignIn() {
     const handlechange=(e)=>{
         e.preventDefault();
         setUser({...user,[e.target.name]: e.target.value });
-    //   console.log(user);
+      console.log(user);
     }
 
   return (

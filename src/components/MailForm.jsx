@@ -8,8 +8,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AttachFileIcon from "@mui/icons-material/AttachFile";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
-
+import useApi from '../hook/useApi';
+import { API_URLS } from '../service/globalUrl';
 
 
 
@@ -20,6 +20,9 @@ function MailForm(props) {
    
     const [file,setFile]=useState(null);
 
+//getting token from local storage
+const token=localStorage.getItem('token');
+
     
     const [mail,setMail ]=useState({
       to:'',
@@ -28,28 +31,23 @@ function MailForm(props) {
       attachment:'',
     });
     
+//file upload api
+const file_load=useApi(API_URLS.uploadFile);
+    
+// api for mail sending
+const mail_send=useApi(API_URLS.compose);
+    
 
-    
-    
+//function for file upload
     const uploadFile=async(e)=>{
-    
       e.stopPropagation();
       e.preventDefault();
-   
-    
       let data = new FormData();
       data.set("sample_file", file);
 
-     const url='https://gmail-clone-yppd.onrender.com';
      try {
-     console.log("try from upload")
-      const res = await axios.post(`${url}/mail/upload`, data,{
-        headers:{
-          'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2U4MWY5ODFhNmJiMzk3N2Y0YTkzNyIsImlhdCI6MTY5ODgxOTk5MX0.LIMA2p254tEsMTrspiqLodAW9LpJ8HzbtVeZNOXuV0s'
-        }
-      });
+    const res= await file_load.call(data,token);
     console.log(res);
-    
     console.log(res.data.secure_url);
     document.getElementById('file-name').setAttribute('href',res.data.secure_url);
     setMail({...mail,attachment:`${res.data.secure_url}`});
@@ -57,43 +55,34 @@ function MailForm(props) {
     } catch (error) {
       console.log(error);
     }
-          
-    }
+     }
     
+     //function to handle file selection
     const handleSelectFile = (e) =>{
       setFile(e.target.files[0]);
+  }
 
+  //function to handle to mail details
+  const handleChange=(e)=>{
+  setMail({...mail,[e.target.name]:e.target.value});
+  console.log(mail)
     }
 
-    const handleChange=(e)=>{
-       setMail({...mail,[e.target.name]:e.target.value});
-       console.log(mail)
-    }
-
+  //function to send mail
     const handleSend=async(e)=>{
       e.stopPropagation();
       e.preventDefault();
       props.handlex();
       try {
-        const url='https://gmail-clone-yppd.onrender.com';
-        const res = await axios.post(`${url}/mail/send`, mail,{
-          headers:{
-            'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2U4MWY5ODFhNmJiMzk3N2Y0YTkzNyIsImlhdCI6MTY5ODgxOTk5MX0.LIMA2p254tEsMTrspiqLodAW9LpJ8HzbtVeZNOXuV0s'
-          }
-        });
+        const res= await mail_send.call(mail,token);
         console.log(res);
         console.log("from send")
-      } catch (error) {
-        
+      } catch (error) {        
         console.log(error);
       }
     }
 
-    
-    
   return (
-     
-
     <Box
       component="form"
       sx={{
@@ -104,7 +93,6 @@ function MailForm(props) {
       autoComplete="off"
       encType="multipart/form-data"
       method='post'
-
     >
         <FormField>
       <ToField >
@@ -114,12 +102,10 @@ function MailForm(props) {
     name="to"
     id='to'
     onChange={handleChange}
-
     />
       </ToField>
       
       <ToField >
-      
       <InputBase
     placeholder="Subject"
     name="subject"
@@ -138,11 +124,11 @@ function MailForm(props) {
       onChange={handleChange}
       />
       </ToField>
-       {file&&<p id='file-name'>
-        <a id='file-name'
+       {file&&<p >
+         <a id='file-name'
         target='new'
-        >{file.name}</a>
-
+        >{file.name}</a> 
+        
       <IconButton onClick={()=>setFile(null)}>x</IconButton>
       </p>} 
       
@@ -168,9 +154,7 @@ function MailForm(props) {
           </Button>
           </ButtonGroup>
           
-          {/* <Button component="label" startIcon={<AttachFileIcon />}>
-        <VisuallyHiddenInput type="file" />
-      </Button> */}
+          
       <IconButton
         aria-label="more"
         id="long-button"
@@ -186,15 +170,11 @@ function MailForm(props) {
             <DeleteForeverIcon/>
           </Button>
           </ButtonWrap>
-          
-          
-
     </Box>
   )
 }
 
 export default MailForm
-
 
 const ToField=styled(Box)({
    display:"flex",
@@ -213,9 +193,7 @@ const FormField=styled(Box)({
     justifyContent:'stretch',
   "&>:last-child":{
     borderBottom:'none'
-  }  
-    
-    
+  }      
 });
 
 const ButtonWrap=styled(Box)({
@@ -243,7 +221,5 @@ const Upload=styled(Button)({
     "&:focus":{
       border:'none',
       outline:'none'
-      
-    }
-
-})
+        }
+});

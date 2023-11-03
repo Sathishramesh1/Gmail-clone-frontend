@@ -16,6 +16,7 @@ export const emailSlice=createSlice({
         
         setToken:(state,action)=>{
             state.user.token=action.payload;
+            console.log(action.payload);
             return
         },
         getToken:(state)=>{
@@ -32,5 +33,5 @@ export const emailSlice=createSlice({
 });
 
 
-export const {setToken,getToken}=emailSlice.actions
+export const {setToken,getToken,setInbox}=emailSlice.actions
 export default emailSlice.reducer;

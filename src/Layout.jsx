@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Children } from 'react'
 import { useState } from 'react';
 import './App.css'
 import Header from './components/Header'
@@ -11,6 +11,7 @@ import RigthSideIcon from './components/RigthSideIcon';
 import LeftIconBar from './components/SideBars/LeftIconBar';
 import MailHeader from './components/MailComponent/MailHeader';
 import Inbox from './components/Inbox';
+import { Route, Routes } from 'react-router-dom';
 
 
 
@@ -20,9 +21,7 @@ function Layout({children}) {
     const toggleDrawer = () => {
       setOpenDrawer((prevState) => !prevState);
     };
-  // console.log(localStorage.getItem('token'));
-
-
+  
 
   return (
     <>
@@ -49,10 +48,10 @@ function Layout({children}) {
           </TabBarItems>
         </TabBar>
       <MailContainer >
-      <Box sx={{display:'flex', width:'98%'}}>
-        {/* <Inbox/> */}
-        {children}
-      </Box>
+      {/* <Box sx={{display:'flex', width:'98%'}}>
+         
+      </Box> */}
+     {children}
         </MailContainer>
           
       </MainBodyWrapper>
@@ -62,9 +61,7 @@ function Layout({children}) {
       </Main>
       
       </LayoutWrapper>
-    
-    
-    
+      
     </>
   )
 }

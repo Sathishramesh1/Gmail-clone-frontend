@@ -14,28 +14,25 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
 
-  const token=localStorage.getItem('token')||null;
 
-
-// const [token, setToken] = useState(localStorage.getItem('token')||null);
+const [token, setToken] = useState(localStorage.getItem('token')||null);
 
 // const logout = () => {
 //   localStorage.removeItem('token');
 //   setToken('');
 // }
-
+   console.log(token)
 
   return (
     <div>
       
      <BrowserRouter>
       <Routes>
+
       <Route path='/register' Component={SignUp}/>
         <Route exact path='/' element={<SignIn />}/>
-        <Route path='/protected' element={token?<Layout>
-          {/* <Route path='inbox' element={Inbox}/> */}
-          <Inbox/>
-        </Layout>:<SignIn/>} >
+        <Route path='/protected' element={<Inbox/>} >
+          
         </Route>
 
         <Route  path='/forget' Component={Forget}/>

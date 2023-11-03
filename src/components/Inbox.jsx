@@ -5,55 +5,56 @@ import styled from 'styled-components';
 import { Box,  } from '@mui/material';
 import Checkbox from "@mui/material/Checkbox";
 import { Star, StarBorder } from '@mui/icons-material';
-import UseApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
 import { useDispatch, useSelector } from 'react-redux';
-// import {getinbox} from './redux-container/slices/emailSlice.js'
+import { setInbox} from './redux-container/slices/emailSlice'
 import useApi from '../hook/useApi';
+import Layout from '../Layout';
 
 function Inbox() {
 
   const dispatch=useDispatch();
   const token=useSelector(state=>state.email.user.token);
+  const inbox=useSelector(state=>state.email.inbox);
   
-  const [inbox,setInbox]=useState([{
-    name:'sathish',
-    from:'sathishrameshkec@gmail',
-    to:'nandha@gmail.com',
-    subject:'inbox mail',
-    content:'checking the inbox layout',
-    date:'1/11/2023',
-    starred:true
-  },
-  {
-    name:'sathish',
-    from:'sathishrameshkec@gmail',
-    to:'nandha@gmail.com',
-    subject:'inbox mail',
-    content:'checking the inbox layout',
-    date:'1/11/2023',
-    starred:false
-    },
-  {
-    name:'sathish',
-    from:'sathishrameshkec@gmail',
-    to:'nandha@gmail.com',
-    subject:'inbox mail',
-    content:'checking the inbox layout',
-    date:'1/11/2023',
-    starred:true
-  }
-  ]);
+  // const [inbox,setInbox]=useState([{
+  //   name:'sathish',
+  //   from:'sathishrameshkec@gmail',
+  //   to:'nandha@gmail.com',
+  //   subject:'inbox mail',
+  //   content:'checking the inbox layout',
+  //   date:'1/11/2023',
+  //   starred:true
+  // },
+  // {
+  //   name:'sathish',
+  //   from:'sathishrameshkec@gmail',
+  //   to:'nandha@gmail.com',
+  //   subject:'inbox mail',
+  //   content:'checking the inbox layout',
+  //   date:'1/11/2023',
+  //   starred:false
+  //   },
+  // {
+  //   name:'sathish',
+  //   from:'sathishrameshkec@gmail',
+  //   to:'nandha@gmail.com',
+  //   subject:'inbox mail',
+  //   content:'checking the inbox layout',
+  //   date:'1/11/2023',
+  //   starred:true
+  // }
+  // ]);
 const getInbox=useApi(API_URLS.getInboxEmail);
 useEffect(()=>{
 
   const fetchdata=async()=>{
     const res=await getInbox.call({},token);
+    console.log("use")
   if(res.status){
     const data=res.data.InboxMail
-    setInbox([...inbox,...data])
+   dispatch(setInbox(data));
   }
-
   }
  fetchdata();
  
@@ -62,8 +63,9 @@ useEffect(()=>{
 
 
   return (
+    <Layout>
     <RowContainer>
-       {inbox.map((message)=>(
+       {inbox?.map((message)=>(
          <Row key={message.name}> 
          <Icons>
          <Checkbox />
@@ -82,7 +84,7 @@ useEffect(()=>{
         
          </Icons>
           <Message>
-          <div>{message.name}</div>
+          <div>{message.sender_name}</div>
          <div>{message.subject}</div>
          <div>{message.date}</div>
          </Message>
@@ -92,6 +94,8 @@ useEffect(()=>{
        ))}
        
 </RowContainer>
+</Layout>
+
   );
 }
 
