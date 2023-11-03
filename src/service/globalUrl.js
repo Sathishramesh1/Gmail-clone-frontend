@@ -3,7 +3,7 @@ export const API_URLS = {
     endpoint: "mail/send",
     method: "POST",
   },
-  getInboxEmial: {
+  getInboxEmail: {
     endpoint: "mail/inbox",
     method: "GET",
   },
@@ -60,6 +60,16 @@ export const API_URLS = {
   getRegister:{
     endpoint:"api/register",
     method:'POST'
+
+  },
+  getForget:{
+    endpoint:"api/forget",
+    method:'POST'
+  },
+  getReset:{
+    endpoint:"api/reset",
+    method:'POST'
+
 
   }
   

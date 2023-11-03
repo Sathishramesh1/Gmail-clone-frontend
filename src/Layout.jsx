@@ -14,13 +14,13 @@ import Inbox from './components/Inbox';
 
 
 
-function Layout() {
+function Layout({children}) {
     const [openDrawer, setOpenDrawer] = useState(true);
 
     const toggleDrawer = () => {
       setOpenDrawer((prevState) => !prevState);
     };
-  
+  // console.log(localStorage.getItem('token'));
 
 
 
@@ -50,7 +50,8 @@ function Layout() {
         </TabBar>
       <MailContainer >
       <Box sx={{display:'flex', width:'98%'}}>
-        <Inbox/>
+        {/* <Inbox/> */}
+        {children}
       </Box>
         </MailContainer>
           

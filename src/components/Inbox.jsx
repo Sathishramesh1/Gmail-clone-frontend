@@ -8,13 +8,13 @@ import { Star, StarBorder } from '@mui/icons-material';
 import UseApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
 import { useDispatch, useSelector } from 'react-redux';
-import {getinbox} from './redux-container/slices/emailSlice.js'
+// import {getinbox} from './redux-container/slices/emailSlice.js'
 import useApi from '../hook/useApi';
 
 function Inbox() {
 
-  // const dispatch=useDispatch();
-  // const email=useSelector(state=>state.email);
+  const dispatch=useDispatch();
+  const token=useSelector(state=>state.email.user.token);
   
   const [inbox,setInbox]=useState([{
     name:'sathish',
@@ -44,10 +44,18 @@ function Inbox() {
     starred:true
   }
   ]);
-const getInbox=useApi(API_URLS.getInboxEmial);
+const getInbox=useApi(API_URLS.getInboxEmail);
 useEffect(()=>{
-  const token='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1M2U4MWY5ODFhNmJiMzk3N2Y0YTkzNyIsImlhdCI6MTY5ODkyNDg3OH0.qdMzvGBx2ShMGhD6wUcq5GRkUr_q1jzNPEuE4wOtiM8'
- getInbox.call({},token);
+
+  const fetchdata=async()=>{
+    const res=await getInbox.call({},token);
+  if(res.status){
+    const data=res.data.InboxMail
+    setInbox([...inbox,...data])
+  }
+
+  }
+ fetchdata();
  
 },[])
 

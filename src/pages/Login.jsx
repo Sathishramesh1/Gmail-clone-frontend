@@ -16,9 +16,10 @@ import { useNavigate } from 'react-router-dom';
 import {useState} from 'react'
 import useApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
-import { ToastContainer, toast } from 'react-toastify';
-// import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from 'react-redux';
+import {setToken,getToken} from '../components/redux-container/slices/emailSlice'
 
 function Copyright(props) {
   return (
@@ -37,7 +38,10 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn(props) {
+export default function SignIn() {
+
+  const dispatch=useDispatch();
+  const email=useSelector(state=>state.email);
 
     const navigate=useNavigate();
     const[user,setUser]=useState({
@@ -54,13 +58,14 @@ export default function SignIn(props) {
          toast.loading("Please wait...",{
             position: toast.POSITION.TOP_CENTER });
 
-   await getlogin.call(user,'');
-  
-    const token=getlogin?.response?.jwttoken 
-     props.setToken(token);
+  const res= await getlogin.call(user,'');
+  const token=res.data.jwttoken
+     
+
+     dispatch(setToken(token));
      toast.dismiss();
         event.target.reset();
-        if(getlogin.isLoading){
+        if(res.status){
         toast.success("Login Successfully", {
             position: "top-center",
             autoClose: 1500,
@@ -71,14 +76,10 @@ export default function SignIn(props) {
             progress: undefined,
             theme: "colored",
           });
-        }
-        navigate('/protected/inbox');
-        // console.log(user);
-    } 
-    catch (error) {
-        toast.dismiss();
-        console.log("error",error);
-        toast.error("Unable to Login", {
+          navigate('/protected/inbox');
+         
+        }else{
+          toast.error("Unable to Login", {
             position: "top-center",
             autoClose: 1500,
             hideProgressBar: false,
@@ -88,6 +89,15 @@ export default function SignIn(props) {
             progress: undefined,
             theme: "colored",
           });
+
+        }
+       
+        
+    } 
+    catch (error) {
+       
+        console.log("error",error);
+        
     
     }
     };
@@ -154,12 +164,12 @@ export default function SignIn(props) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/forget" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/register" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -8,16 +8,23 @@ import { API_URLS } from "../../../service/globalUrl";
 
 export const emailSlice=createSlice({
     name:"email",
-    initialState:{inbox:[],send:[],draft:[],trash:[]},
+    initialState:{user:{
+        token:localStorage.getItem('token')||null,
+        email:null
+    },inbox:[],send:[],draft:[],trash:[]},
     reducers:{
-        //methods for the reducers
-       getinbox:(state)=>{
-        const getmail= UseApi(API_URLS.getInboxEmial).call({});
-    
-        // state.inbox.push(getmail.response)
-
-       }       
         
+        setToken:(state,action)=>{
+            state.user.token=action.payload;
+            return
+        },
+        getToken:(state)=>{
+         return state.user.token
+        },
+        setInbox:(state,action)=>{
+          state.inbox.push(...action.payload);
+        }
+              
 
     }
 
@@ -25,5 +32,5 @@ export const emailSlice=createSlice({
 });
 
 
-export const {getinbox}=emailSlice.actions
+export const {setToken,getToken}=emailSlice.actions
 export default emailSlice.reducer;

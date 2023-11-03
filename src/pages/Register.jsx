@@ -17,6 +17,8 @@ import { API_URLS } from '../service/globalUrl';
 import useApi from '../hook/useApi';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { toast } from 'react-toastify';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -42,7 +44,7 @@ const defaultTheme = createTheme();
 const validationSchema = yup.object({
     name: yup
       .string('Enter your name')
-      .name('Enter a valid name')
+    //   .name('Enter a valid name')
       .required('Name is required'),
       email: yup
       .string('Enter your email')
@@ -58,8 +60,52 @@ const validationSchema = yup.object({
 
 
 export default function SignUp() {
+const navigate=useNavigate();
 
-//  const [user,setUser]=useState({name:'',email:'',password:''});
+//calling end point from global url
+const getRegister=useApi(API_URLS.getRegister);
+
+const handleSubmit = async() => {
+    
+   try {  
+  const res=await getRegister.call(formik.values,'');
+  console.log("Registration successful");
+  if(res.status){
+    toast.success("Registered Successfully", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    navigate('/');
+    return
+  }else{
+    
+    toast.error("Unable to Register", {
+      position: "top-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  }
+   
+
+} catch (error) {
+    console.log(error);
+}
+
+}
+
+
+
 
 const formik = useFormik({
     initialValues: {
@@ -69,45 +115,17 @@ const formik = useFormik({
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+       handleSubmit();
+       formik.resetForm();
     },
   });
-
-
-//calling end point from global url
-const getRegister=useApi(API_URLS.getRegister);
-
-  const handleSubmit = async(event) => {
-    event.preventDefault();
-   
-   try {
-     await getRegister.call(user,'');
-     
-     event.target.reset();
-
-   } catch (error) {
-    
-    console.log(error);
-   }
-  
-
-};
-
-// const handlechange=(e)=>{
-//     e.preventDefault();
-//     setUser({...user,[e.target.name]: e.target.value });
-//   console.log(user);
-// };
-
-
-
 
 
 
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs"  > 
         <CssBaseline />
         <Box
           sx={{
@@ -128,10 +146,10 @@ const getRegister=useApi(API_URLS.getRegister);
               <Grid item xs={12} >
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="name"
                   required
                   fullWidth
-                  id="firstName"
+                  id="name"
                   label="First Name"
                   autoFocus
                   value={formik.values.name}
@@ -154,13 +172,9 @@ const getRegister=useApi(API_URLS.getRegister);
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  error={formik.touched.name && Boolean(formik.errors.name)}
-                  helperText={formik.touched.name && formik.errors.name}
-
-
-
-
-                />
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
+                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
@@ -171,7 +185,12 @@ const getRegister=useApi(API_URLS.getRegister);
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  onChange={handlechange}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  error={formik.touched.password && Boolean(formik.errors.password)}
+                  helperText={formik.touched.password && formik.errors.password}
+      
                 />
               </Grid>
               <Grid item xs={12}>
@@ -191,7 +210,7 @@ const getRegister=useApi(API_URLS.getRegister);
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
