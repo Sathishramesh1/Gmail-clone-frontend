@@ -135,7 +135,8 @@ const LayoutWrapper=styled(Box)({
      height:'70%',
      borderRadius:'20px',
      borderTopLeftRadius:0,
-     borderTopRightRadius:0 
+     borderTopRightRadius:0 ,
+     overflowY:'scroll'
    
    });
    

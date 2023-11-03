@@ -24,6 +24,14 @@ export const emailSlice=createSlice({
         },
         setInbox:(state,action)=>{
           state.inbox.push(...action.payload);
+    
+    },
+
+        //function to find mail clicked inbox
+
+        openMessage:(state)=>{
+
+    
         }
               
 

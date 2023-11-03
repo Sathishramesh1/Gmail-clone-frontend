@@ -17,34 +17,7 @@ function Inbox() {
   const token=useSelector(state=>state.email.user.token);
   const inbox=useSelector(state=>state.email.inbox);
   
-  // const [inbox,setInbox]=useState([{
-  //   name:'sathish',
-  //   from:'sathishrameshkec@gmail',
-  //   to:'nandha@gmail.com',
-  //   subject:'inbox mail',
-  //   content:'checking the inbox layout',
-  //   date:'1/11/2023',
-  //   starred:true
-  // },
-  // {
-  //   name:'sathish',
-  //   from:'sathishrameshkec@gmail',
-  //   to:'nandha@gmail.com',
-  //   subject:'inbox mail',
-  //   content:'checking the inbox layout',
-  //   date:'1/11/2023',
-  //   starred:false
-  //   },
-  // {
-  //   name:'sathish',
-  //   from:'sathishrameshkec@gmail',
-  //   to:'nandha@gmail.com',
-  //   subject:'inbox mail',
-  //   content:'checking the inbox layout',
-  //   date:'1/11/2023',
-  //   starred:true
-  // }
-  // ]);
+  
 const getInbox=useApi(API_URLS.getInboxEmail);
 useEffect(()=>{
 
@@ -52,21 +25,31 @@ useEffect(()=>{
     const res=await getInbox.call({},token);
     console.log("use")
   if(res.status){
-    const data=res.data.InboxMail
+    const data=res.data.InboxMail;
+    const filterdata=[...inbox,...data];
+    const answer=filterdata.filter((msg)=>filterdata.indexOf(msg._id)==filterdata.lastIndexOf(msg._id));
    dispatch(setInbox(data));
+   console.log(answer,"hello")
   }
   }
  fetchdata();
  
-},[])
+},[]);
 
+//function to open single mail
+const handleMailClick=(e)=>{
+console.log(e.target.id);
+   const res=inbox.find(message=>message._id==e.target.id);
+   console.log(res);
+
+}
 
 
   return (
     <Layout>
     <RowContainer>
        {inbox?.map((message)=>(
-         <Row key={message.name}> 
+         <Row key={message._id}> 
          <Icons>
          <Checkbox />
           {message.starred?(<Star
@@ -83,7 +66,7 @@ useEffect(()=>{
    )}  
         
          </Icons>
-          <Message>
+          <Message onClick={handleMailClick} id={message._id}>
           <div>{message.sender_name}</div>
          <div>{message.subject}</div>
          <div>{message.date}</div>
@@ -121,9 +104,10 @@ const Icons=styled('div')({
   alignItems:'center'
 });
 
-const Message=styled(Box)({
+const Message=styled('div')({
  display:'flex',
  flexDirection:'row',
  width:'100%',
- justifyContent:'space-between'
+ justifyContent:'space-between',
+ 
 })
