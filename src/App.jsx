@@ -11,6 +11,8 @@ import Forget from './pages/Forget';
 import Reset from './pages/Reset';
 import {getToken} from './components/redux-container/slices/emailSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import SingleMail from './pages/SingleMail';
+import Send from './pages/Send';
 
 function App() {
 
@@ -31,10 +33,11 @@ const [token, setToken] = useState(localStorage.getItem('token')||null);
 
       <Route path='/register' Component={SignUp}/>
         <Route exact path='/' element={<SignIn />}/>
-        <Route path='/protected' element={<Inbox/>} >
-          
+        <Route path='/inbox' element={<Inbox/>} >
         </Route>
-
+        <Route path='/:type/:messageid' element={<SingleMail/>}></Route>
+      <Route path='/send' element={<Send/>}/>
+       
         <Route  path='/forget' Component={Forget}/>
         <Route  path='/reset/:resetToken' Component={Reset}/>
         

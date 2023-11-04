@@ -7,7 +7,7 @@ import { API_URLS } from "../../../service/globalUrl";
 //creating cartslice
 
 export const emailSlice=createSlice({
-    name:"email",
+    name:'email',
     initialState:{user:{
         token:localStorage.getItem('token')||null,
         email:null
@@ -23,16 +23,18 @@ export const emailSlice=createSlice({
          return state.user.token
         },
         setInbox:(state,action)=>{
-          state.inbox.push(...action.payload);
+    //    console.log(action,"action");
     
+        action.payload.forEach(element => {
+             state.inbox.every((msg)=>element._id!==msg._id) ? state.inbox.push(element):null 
+            
+        });
     },
 
-        //function to find mail clicked inbox
+        
+    //function to find mail clicked inbox
 
-        openMessage:(state)=>{
-
-    
-        }
+        
               
 
     }

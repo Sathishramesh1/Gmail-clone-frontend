@@ -25,23 +25,23 @@ import SettingsIcon from '@mui/icons-material/Settings';
       icon: StarIcon,
     },
     {
-      name: "Sent",
-      title: "Sent",
+      name: "send",
+      title: "send",
       icon:  SendIcon,
     },
     {
       name: "drafts",
-      title: "Drafts",
+      title: "drafts",
       icon: InsertDriveFileIcon,
     },
     {
-      name: "Important",
-      title: "Important",
+      name: "important",
+      title: "important",
       icon: LabelImportantIcon,
     },
     {
-      name: "Trash",
-      title: "Trash",
+      name: "trash",
+      title: "trash",
       icon: DeleteIcon,
     },
   

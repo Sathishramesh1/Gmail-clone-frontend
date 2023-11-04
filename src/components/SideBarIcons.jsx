@@ -4,9 +4,11 @@ import { Box, Button, Container, ListItem } from '@mui/material';
 import {styled} from '@mui/material'
 import { Sidebar_icons } from './config/sidebar';
 import CustomizedDialogs from './Dialog';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 function SideBarIcons() {
     
+  const naviage=useNavigate();
 const [open, setOpen] = useState(false);
   
   const handleClickOpen = () => {
@@ -34,10 +36,12 @@ const [open, setOpen] = useState(false);
        </ComposeWrapper>
        <FeaturesWrapper>
         {Sidebar_icons.map((element)=>(
-            <ListItem key={element.name} >
+            <ListItem key={element.name} onClick={()=>naviage('/send')}>
+              
             <element.icon sx={{paddingRight:3}}>
             </element.icon>
             {element.title}
+            
             </ListItem>
         ))}
 

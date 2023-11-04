@@ -79,7 +79,7 @@ export default function SignIn() {
             progress: undefined,
             theme: "colored",
           });
-          navigate("/protected");
+          navigate("/inbox");
          
         }else{
           toast.error("Unable to Login", {

@@ -10,13 +10,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setInbox} from './redux-container/slices/emailSlice'
 import useApi from '../hook/useApi';
 import Layout from '../Layout';
+import { useNavigate } from 'react-router-dom';
 
 function Inbox() {
-
+ 
+  const navigate=useNavigate();
   const dispatch=useDispatch();
-  const token=useSelector(state=>state.email.user.token);
-  const inbox=useSelector(state=>state.email.inbox);
-  
+  // const token=useSelector(state=>state.email.user.token);
+  const state=useSelector(state=>state.email);
+  const {inbox}=state
+  const token=localStorage.getItem('token');
   
 const getInbox=useApi(API_URLS.getInboxEmail);
 useEffect(()=>{
@@ -26,10 +29,8 @@ useEffect(()=>{
     console.log("use")
   if(res.status){
     const data=res.data.InboxMail;
-    const filterdata=[...inbox,...data];
-    const answer=filterdata.filter((msg)=>filterdata.indexOf(msg._id)==filterdata.lastIndexOf(msg._id));
-   dispatch(setInbox(data));
-   console.log(answer,"hello")
+     dispatch(setInbox(data));
+   
   }
   }
  fetchdata();
@@ -37,11 +38,15 @@ useEffect(()=>{
 },[]);
 
 //function to open single mail
-const handleMailClick=(e)=>{
-console.log(e.target.id);
-   const res=inbox.find(message=>message._id==e.target.id);
+const handleMailClick=(event)=>{
+  // event.stopPropagation()
+ console.log(event.target.id)
+const messageid=event.target.id
+   const res=inbox.find(message=>message._id==event.target.id);
    console.log(res);
-
+   navigate(`/inbox/${messageid}`);
+   console.log("hi")
+   
 }
 
 
@@ -49,7 +54,7 @@ console.log(e.target.id);
     <Layout>
     <RowContainer>
        {inbox?.map((message)=>(
-         <Row key={message._id}> 
+         <Row key={message._id} > 
          <Icons>
          <Checkbox />
           {message.starred?(<Star
@@ -64,15 +69,12 @@ console.log(e.target.id);
           // onClick={() => toggleStarredMail()}
         />
    )}  
-        
          </Icons>
-          <Message onClick={handleMailClick} id={message._id}>
-          <div>{message.sender_name}</div>
+          <Message  id={message._id} onClick={handleMailClick} >
+          <div >{message.sender_name}</div>
          <div>{message.subject}</div>
          <div>{message.date}</div>
          </Message>
-            
-
          </Row>
        ))}
        
@@ -90,7 +92,10 @@ const Row=styled(Box)({
     gridTemplateColumns:'10%  90%',
      width:'100%',
      placeItems:'center',
-     fontSizeAdjust:'from-font'
+     fontSizeAdjust:'from-font',  
+     "&:hover":{
+      backgroundColor:'lightyellow'
+     }
      
 });
 
