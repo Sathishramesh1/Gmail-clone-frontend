@@ -37,16 +37,16 @@ export const API_URLS = {
     method: "POST",
   },
   deleteEmail: {
-    endpoint: "mail/delete/:messageid",
+    endpoint: "mail/delete",
     method: "DELETE",
   },
   toggleStarredEmail:{
-    endpoint: "mail/starred/:messageid",
-    method: "PATCH",
+    endpoint: "mail/starred",
+    method: "POST",
   },
   toggleImportantEmail:{
-    endpoint: "mail/important/:messageid",
-    method: "PATCH",
+    endpoint: "mail/important",
+    method: "POST",
   },
   uploadFile:{
     endpoint: "mail/upload",

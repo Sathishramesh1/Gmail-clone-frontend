@@ -36,13 +36,15 @@ const [open, setOpen] = useState(false);
        </ComposeWrapper>
        <FeaturesWrapper>
         {Sidebar_icons.map((element)=>(
-            <ListItem key={element.name} onClick={()=>naviage('/send')}>
+            <NavLink key={element.name}  >
+              <ListItem>
               
-            <element.icon sx={{paddingRight:3}}>
+            <element.icon sx={{paddingRight:"1em"}}>
             </element.icon>
             {element.title}
-            
             </ListItem>
+            
+            </NavLink>
         ))}
 
        </FeaturesWrapper>
@@ -102,7 +104,12 @@ const FeaturesWrapper=styled(Box)({
     justifyContent:'center',
     flexDirection:'column',
     marginTop:10,
-     
+     color:'black',
+
+     '& > a.active':{
+      color:'black'
+     },
+
     '& > *:hover':{
          background:'#bfd6fb',
          borderRadius:'0px 40px 40px 0px',

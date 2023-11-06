@@ -11,7 +11,10 @@ export const emailSlice=createSlice({
     initialState:{user:{
         token:localStorage.getItem('token')||null,
         email:null
-    },inbox:[],send:[],draft:[],trash:[]},
+    },inbox:[],send:[],draft:[],trash:[],
+starred:[],
+important:[]
+},
     reducers:{
         
         setToken:(state,action)=>{
@@ -30,8 +33,16 @@ export const emailSlice=createSlice({
             
         });
     },
+       setSend:(state,action)=>{
 
-        
+        action.payload.forEach(element => {
+            state.send.every((msg)=>element._id!==msg._id) ? state.send.push(element):null 
+           
+       });
+
+
+       }
+
     //function to find mail clicked inbox
 
         
@@ -43,5 +54,5 @@ export const emailSlice=createSlice({
 });
 
 
-export const {setToken,getToken,setInbox}=emailSlice.actions
+export const {setToken,getToken,setInbox,setSend}=emailSlice.actions
 export default emailSlice.reducer;

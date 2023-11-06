@@ -3,6 +3,9 @@ import React, { useEffect, useState } from 'react'
 import Layout from '../Layout'
 import {  useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
+import useApi from '../hook/useApi';
+import API_GMAIL from '../service/globalapi';
+import { API_URLS } from '../service/globalUrl';
 
 function SingleMail() {
     const {messageid,type}=useParams();
@@ -18,13 +21,14 @@ function SingleMail() {
 useEffect(()=>{
   
   const openMessage=async()=>{
-     
+    let opened
     if(type=='inbox'){
-       let opened =await inbox.find((element)=>element._id ==messageid)
+        opened =await inbox.find((element)=>element._id ==messageid)
        setMessage(opened);
   
     }else if(type=='send'){
-
+      opened= await send.find((element)=>element._id ==messageid);
+      setMessage(opened);
     }else if(type=='draft'){
 
     }else if(type=='trash'){
@@ -49,8 +53,9 @@ openMessage();
     <div>
      
     <Mailheading>{message?.subject?.toString()}</Mailheading>
-      <MailDetail><span>{message?.sender_name?.toString()}</span><span>{message?.from?.toString()}</span>
-     <span>{message.date}</span>
+      <MailDetail><div>{message?.sender_name ||message.reciver_name}</div>
+      <div>{message?.from?.toString()}</div>
+     <div>{message.date}</div>
      </MailDetail>
      <p>{message?.content}</p>
      {message.attachment?<a href={message.attachment} target='_new'>Attachment</a> : "" }

@@ -8,7 +8,8 @@ const API_GMAIL = async (urlObject, payload,token,params) => {
     url: `${API_URL}/${urlObject.endpoint}` ,
     data: payload, // initially it was {} payload
     params:{
-      resetToken:params
+      resetToken:params,
+      messageid:params
     },
     headers:{
       "x-auth-token":token
