@@ -128,7 +128,7 @@ if(res.status){
         >
         <StarBorder
           fontSize="small"
-          style={{ }}
+          
           
         />
         </IconButton>
@@ -146,7 +146,7 @@ if(res.status){
    ):(
     <IconButton>
     <LabelImportantOutlinedIcon
-    style={{}}
+   
     />
     </IconButton>
    )
@@ -155,7 +155,7 @@ if(res.status){
           <Message  id={message._id}  >
           <div >{message.sender_name||message.reciver_name}</div>
          <div>{message.subject}</div>
-         <div>{message.date}</div>
+         <div>{message.date.slice(0,10)}</div>
          <div >
 
           <IconButton onClick={handleDelete} className='delete'>
@@ -190,11 +190,11 @@ const MailContainer=styled(Box)({
 
 const Row=styled(Box)({
   display:'grid',
-  // gridTemplateColumns:'10% 10% auto 5%',
   gridTemplateColumns:'15%  auto',
    width:'100%',
    placeItems:'center',
-   border:'1px solid blue',
+  borderBottom:'1px solid gray',
+  
    fontSizeAdjust:'from-font',  
    "&:hover":{
     backgroundColor:'lightyellow'
@@ -203,10 +203,15 @@ const Row=styled(Box)({
 });
 
 const Message=styled('div')({
-  display:'flex',
-  flexDirection:'row',
+  display:'grid',
+  gridTemplateColumns:'10% 30%  10% 5%',
   width:'100%',
   justifyContent:'space-between',
+  alignItems:'center',
+  "& > *":{
+    display:'flex',
+    
+  }
   
  });
 

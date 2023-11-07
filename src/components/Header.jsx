@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, styled, InputBase, Box } from "@mui/material";
+import { AppBar, Toolbar, styled, InputBase, Box, IconButton } from "@mui/material";
 import {
   Menu as MenuIcon,
   Search,
@@ -13,7 +13,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 
 const Header = ({ toggleDrawer }) => {
   return (
-    <StyledAppBar position="static" sx={{flexGrow: 1}}>
+    <StyledAppBar  >
       <StyledToolbar>
       <LogoWrapper>
         <MenuIcon color="action" onClick={toggleDrawer} cursor="pointer" />
@@ -33,10 +33,19 @@ const Header = ({ toggleDrawer }) => {
 
         <IconsWrapper>
           <Icon>
+            <IconButton>
           <HelpOutlineOutlined color="action" />
+          </IconButton>
+          <IconButton>
           <SettingsOutlined color="action" />
+          </IconButton>
+        
+          <IconButton>
           <AppsOutlined color="action" />
+          </IconButton>
+          <IconButton>
           <AccountCircleOutlined color="action" />
+          </IconButton>
           </Icon>
         </IconsWrapper>
         
@@ -50,7 +59,9 @@ export default Header;
 const StyledAppBar = styled(AppBar)({
   background: "#f5f5f5",
   boxShadow: "none",
-  height:'64px !important'
+  height:'64px !important',
+  position:"static",
+  flexGrow:1,
   // width: "100vw ",
 
  
@@ -66,7 +77,7 @@ const StyledToolbar=styled(Toolbar)({
 
 const SearchRapper = styled(Box)({
   background: "#EAF1FB",
-  marginLeft: 40,
+  marginLeft: 20,
   borderRadius: 8,
   marginRight:8,
   
@@ -75,7 +86,7 @@ const SearchRapper = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "0 20px",
+  padding: "0px 10px",
   "& > div": {
     width: "100%",
     padding: "0 10px",
@@ -91,7 +102,7 @@ const IconsWrapper = styled(Box)({
   gridTemplateRows:"repeat(4,30)",
   background: "#f5f5f5",
   marginLeft:'30%',
-  // gap:20,
+ 
   " & > div":{
     
   }

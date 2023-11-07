@@ -12,7 +12,10 @@ import LeftIconBar from './components/SideBars/LeftIconBar';
 import MailHeader from './components/MailComponent/MailHeader';
 import Inbox from './components/Inbox';
 import { Route, Routes } from 'react-router-dom';
-
+import InboxIcon from '@mui/icons-material/Inbox';
+import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
+import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 
 function Layout({children}) {
@@ -41,10 +44,26 @@ function Layout({children}) {
         </EmailTopBar>
         <TabBar>
           <TabBarItems>
-          <p>primary</p>
-          <p>promotion </p>
-          <p>social</p>
-          <p>updates</p>
+          <div>
+            <div>
+            <InboxIcon />
+            </div>
+            Primary</div>
+          <div>
+            <div>
+            <LocalOfferOutlinedIcon/>
+            </div>
+            Promotion</div>
+          <div>
+            <div>
+            <GroupOutlinedIcon/>
+            </div>
+            Social</div>
+          <div>
+            <div>
+            <InfoOutlinedIcon/>
+            </div>
+            Updates</div>
           </TabBarItems>
         </TabBar>
       <MailContainer >
@@ -117,15 +136,32 @@ const LayoutWrapper=styled(Box)({
      display:'flex',
      width:'100%',
      height:50,
-     background:'grey'
+    //  background:'grey'
    
    });
    
    const TabBarItems=styled('div')({
-      display:'flex',
-      flexDirection:'row',
+      display:'grid',
+      gridTemplateColumns:'25% 25% 25% 25%',
       width:'100%',
-      justifyContent:'space-between'
+      justifyContent:'space-between',
+      alignItems:'center',
+      
+  
+
+      
+      "& >*":{
+        display:'flex',
+       padding:" 10px 0 10px 0",
+       gap:'10px',
+       
+        
+      },
+      "&>*:hover":{
+        backgroundColor:'#f5f5f5',
+        borderBottom:'3px solid blue'
+      }
+      
    });
    
    const MailContainer=styled(Box)({

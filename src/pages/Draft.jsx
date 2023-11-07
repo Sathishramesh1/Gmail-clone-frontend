@@ -237,8 +237,8 @@ const MailContainer=styled(Box)({
   });
   
   const Message=styled('div')({
-    display:'flex',
-    flexDirection:'row',
+    display:'grid',
+    gridTemplateColumns:'10% 30%  10% 5%',
     width:'100%',
     justifyContent:'space-between',
     

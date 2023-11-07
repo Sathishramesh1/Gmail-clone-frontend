@@ -34,7 +34,7 @@ const Wrapper=styled(Box)({
     justifyContent:'center',
     alignItems:'center',
     gap:10,
-    marginLeft:"15%",
+    marginLeft:"1%",
 
     "& > div":{
 

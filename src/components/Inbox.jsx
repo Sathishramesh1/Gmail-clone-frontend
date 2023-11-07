@@ -13,6 +13,9 @@ import Layout from '../Layout';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { setDelete } from './redux-container/slices/emailSlice';
+import LabelImportantIcon from '@mui/icons-material/LabelImportant';
+import LabelImportantOutlinedIcon from '@mui/icons-material/LabelImportantOutlined';
+
 
 function Inbox() {
  
@@ -56,9 +59,7 @@ const handleMailClick=(event)=>{
 
 //function to handle delete
 const handleDelete=async(event)=>{
-  
   try {
-    
     let messageid=event.target.closest('.row').children[1].id;
   const params=messageid;
   console.log(params);
@@ -73,9 +74,7 @@ const handleDelete=async(event)=>{
      }
   
   }
-    
   } catch (error) {
-    
    console.log(error);
   }
     
@@ -88,19 +87,45 @@ const handleDelete=async(event)=>{
        {inbox?.map((message)=>(
          <Row key={message._id} onClick={handleMailClick} className='row'> 
          <Icons>
-         <Checkbox />
-          {message.starred?(<Star
-          fontSize="medium"
-          style={{ marginRight: 10, color: "#FADA5E" }}
-          // onClick={() => toggleStarredMail()}
+          <IconButton>
+         <Checkbox size='small' />
+         </IconButton>
+          {message.starred?(
+          <IconButton>
+          <Star
+          fontSize="small"
+          style={{  color: "#FADA5E" }}
+         
         />
+        </IconButton>
+       
       ) : (
+        <IconButton>
         <StarBorder
-          fontSize="medium"
-          style={{ marginRight: 10 }}
+          fontSize="small"
+          style={{  }}
           // onClick={() => toggleStarredMail()}
         />
+        </IconButton>
    )}  
+
+{message.important?(
+    <IconButton >
+    <LabelImportantIcon
+    style={{  color: "#FADA5E" }}
+    
+   />
+   </IconButton>
+    
+    
+   ):(
+    <IconButton>
+    <LabelImportantOutlinedIcon
+   
+    />
+    </IconButton>
+   )
+   }
          </Icons>
           <Message  id={message._id}  >
           <div >{message.sender_name}</div>
@@ -125,7 +150,7 @@ export default Inbox
 const Row=styled(Box)({
     display:'grid',
     // gridTemplateColumns:'10% 10% auto 5%',
-    gridTemplateColumns:'10%  auto',
+    gridTemplateColumns:'15%  auto',
      width:'100%',
      placeItems:'center',
      fontSizeAdjust:'from-font',  
@@ -147,9 +172,9 @@ const Icons=styled('div')({
 
 const Message=styled('div')({
  display:'grid',
- gridTemplateColumns:'10% auto 10% 5%',
+ gridTemplateColumns:'10% 30% 10% 5%',
  width:'100%',
- justifyContent:'stretch',
+ justifyContent:'space-between',
  alignItems:'center'
  
 })
