@@ -1,37 +1,54 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../Layout'
 import { Box, Checkbox, IconButton, styled } from '@mui/material';
-import useApi from '../hook/useApi';
-import { API_URLS } from '../service/globalUrl';
-import { setSend } from '../components/redux-container/slices/emailSlice';
-import { useDispatch, useSelector } from 'react-redux';
 import { Star, StarBorder } from '@mui/icons-material';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import LabelImportantOutlinedIcon from '@mui/icons-material/LabelImportantOutlined';
-import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { setDelete } from '../components/redux-container/slices/emailSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import useApi from '../hook/useApi';
+import { API_URLS } from '../service/globalUrl';
+import { setDraft } from '../components/redux-container/slices/emailSlice';
+import CustomizedDialogs from '../components/Dialog';
 
-function Send() {
-   
-const state=useSelector((state)=>state.email);
-const {send}=state;
+
+function Draft() {
+    const state=useSelector((state)=>state.email);
+const {draft}=state;
 const token=useSelector((state)=>state.email.user.token);
 const dispatch=useDispatch();
 const navigate=useNavigate();
 
-const getSendMail=useApi(API_URLS.getSendEmail);
+const getDraftMail=useApi(API_URLS.getDraftEmail);
 const toggler=useApi(API_URLS.toggleStarredEmail);
 const mailDelete=useApi(API_URLS.deleteEmail);
+
+const [open,setOpen]=useState(false);
+const [value,setValue]=useState({
+    to:'',
+    subject:'',
+    content:''
+});
+const [click,setClicked]=useState(false);
+const [messageid,setMessageid]=useState(null);
+
+
+const handleClose=()=>{
+
+    setOpen(false);
+}
 
 
 const fetchdata=async()=>{  
   try {
-    const res=await getSendMail.call({},token);
+    const res=await getDraftMail.call({},token);
   if(res.status){
-    const data=res.data.SendEmail;
-  
-  dispatch(setSend(data));
+    console.log(res.data);
+    const data=res.data.DraftMail;
+    
+  dispatch(setDraft(data));
   }
     
   } catch (error) {
@@ -40,24 +57,23 @@ const fetchdata=async()=>{
   
   }
 
-useEffect(()=>{
-  
-  
 
-fetchdata();
-
-},[]);
 
 
 const handleClick=(event)=>{
-
+ setOpen(true);
 let messageid=event.target.id;
 
 if(messageid){
-   navigate(`/send/${messageid}`)
+    setMessageid(messageid);
+   const editedmail=draft.find((message)=>message._id==messageid);
+   setValue({...value,to:editedmail.to,subject:editedmail.subject
+,content:editedmail.content
+});
+
 }else{
   messageid=event.target.parentElement.id
- navigate(`/send/${messageid}`);
+ 
 }
 
 }
@@ -75,9 +91,10 @@ try {
  console.log(error);     
 }
 }
+
 //
 const handleDelete=async(event)=>{
-  
+    
 try {
   
   let messageid=event.target.closest('.row').children[1].id;
@@ -87,10 +104,11 @@ dispatch(setDelete(messageid));
  const res= await mailDelete.call({},token,params);
  console.log(res);
 if(res.status){
-   const update=await getSendMail.call({},token);
+   const update=await getDraftMail.call({},token);
+   console.log(update);
    if(update.status){
-    const data = update.data.SendEmail;
-        dispatch(setSend(data));
+    const data = update.data.DraftMail;
+        dispatch(setDraft(data));
    }
 
 }
@@ -102,13 +120,29 @@ if(res.status){
   
 }
 
+useEffect(()=>{
+  
+    fetchdata();
+    
+if(click){
+    const autoDelete=async(id)=>{
+        const res=await mailDelete.call({},token,id);
+       console.log(res);
+      dispatch(setDelete(id));
+    }
+     autoDelete(messageid);
+    }
+    
+    },[click]);
+
+
+
   return (
     <Layout>
-       <MailContainer>
-       {send?.map((message)=>(
+        <MailContainer>
+       {draft?.map((message)=>(
         
          <Row key={message._id} className='row' onClick={handleClick} > 
-        
          <Icons>
           <IconButton>
          <Checkbox size='small'/>
@@ -167,51 +201,51 @@ if(res.status){
          </Row>
          
        ))}
+       <CustomizedDialogs open={open} handleClose={handleClose} value={value} setClicked={setClicked}/>
       
-
        </MailContainer>
 
     </Layout>
   )
 }
 
-export default Send
+export default Draft
 
 
 const MailContainer=styled(Box)({
-  // width:'100%',
-  height:'100%',
-  display:'flex',
-  flexDirection:'column',
-  justifyContent:'flex-start',
+    // width:'100%',
+    height:'100%',
+    display:'flex',
+    flexDirection:'column',
+    justifyContent:'flex-start',
+    
   
-
-});
-
-const Row=styled(Box)({
-  display:'grid',
-  // gridTemplateColumns:'10% 10% auto 5%',
-  gridTemplateColumns:'15%  auto',
-   width:'100%',
-   placeItems:'center',
-   border:'1px solid blue',
-   fontSizeAdjust:'from-font',  
-   "&:hover":{
-    backgroundColor:'lightyellow'
-   }
-   
-});
-
-const Message=styled('div')({
-  display:'flex',
-  flexDirection:'row',
-  width:'100%',
-  justifyContent:'space-between',
+  });
   
- });
-
-
- const Icons=styled('div')({
-  display:'flex',
-  alignItems:'center'
-});
+  const Row=styled(Box)({
+    display:'grid',
+    // gridTemplateColumns:'10% 10% auto 5%',
+    gridTemplateColumns:'15%  auto',
+     width:'100%',
+     placeItems:'center',
+     border:'1px solid blue',
+     fontSizeAdjust:'from-font',  
+     "&:hover":{
+      backgroundColor:'lightyellow'
+     }
+     
+  });
+  
+  const Message=styled('div')({
+    display:'flex',
+    flexDirection:'row',
+    width:'100%',
+    justifyContent:'space-between',
+    
+   });
+  
+  
+   const Icons=styled('div')({
+    display:'flex',
+    alignItems:'center'
+  });

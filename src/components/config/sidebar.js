@@ -30,8 +30,8 @@ import SettingsIcon from '@mui/icons-material/Settings';
       icon:  SendIcon,
     },
     {
-      name: "drafts",
-      title: "drafts",
+      name: "draft",
+      title: "draft",
       icon: InsertDriveFileIcon,
     },
     {

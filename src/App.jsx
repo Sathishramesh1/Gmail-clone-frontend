@@ -13,6 +13,8 @@ import {getToken} from './components/redux-container/slices/emailSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import SingleMail from './pages/SingleMail';
 import Send from './pages/Send';
+import ErrorPage from './pages/ErrorPage';
+import Draft from './pages/Draft';
 
 function App() {
 
@@ -23,7 +25,7 @@ const [token, setToken] = useState(localStorage.getItem('token')||null);
 //   localStorage.removeItem('token');
 //   setToken('');
 // }
-   console.log(token)
+  //  console.log(token)
 
   return (
     <div>
@@ -33,14 +35,16 @@ const [token, setToken] = useState(localStorage.getItem('token')||null);
 
       <Route path='/register' Component={SignUp}/>
         <Route exact path='/' element={<SignIn />}/>
-        <Route path='/inbox' element={<Inbox/>} >
+        <Route  path='/inbox' element={<Inbox/>} >
         </Route>
         <Route path='/:type/:messageid' element={<SingleMail/>}></Route>
-      <Route path='/send' element={<Send/>}/>
+      <Route  path='/send' element={<Send/>} />
+      <Route path='/draft' Component={Draft}/>
        
         <Route  path='/forget' Component={Forget}/>
         <Route  path='/reset/:resetToken' Component={Reset}/>
         
+        <Route path='*' Component={ErrorPage}/>
       </Routes>
        </BrowserRouter>
        <ToastContainer/>

@@ -10,6 +10,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import MailForm from './MailForm';
 import { Box, ButtonGroup, NativeSelect, Select } from '@mui/material';
+import useApi from '../hook/useApi';
+import { API_URLS } from '../service/globalUrl';
+import { useState,useEffect } from 'react';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -23,10 +26,47 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 
 export default function CustomizedDialogs(props) {
 
+const [datafromChild,setdatafromChild]=useState({
+      to:'',
+      subject:'',
+      content:'',
+      attachment:'',
+});
+
 const handlex=()=>{
   
    props.handleClose();
 }  
+
+const Save=useApi(API_URLS.saveDraftEmails);
+
+const saveDraft = async(mail)=>{
+      
+   
+  try {
+    const token=localStorage.getItem('token');
+    console.log("dddd",token);
+    const res = await Save.call({...mail},token);
+    console.log(res);
+    if(res.status){
+      console.log(res,"drt");
+    }
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const check=()=>{
+ 
+  handlex();
+  console.log(datafromChild)
+  saveDraft(datafromChild);
+  console.log("from close");
+
+}
+
+
 
 
   return (
@@ -43,7 +83,7 @@ const handlex=()=>{
         </DialogTitle>
         <IconButton
           aria-label="close"
-          onClick={handlex}
+          onClick={check}
           sx={{
             position: 'absolute',
             right: 8,
@@ -54,14 +94,14 @@ const handlex=()=>{
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <MailForm handlex={handlex} />
+          <MailForm handlex={handlex} setdatafromChild={setdatafromChild} value={props.value} setClicked={props.setClicked}/>
           
           
         </DialogContent>
         <DialogActions>
           
            
-          
+        
           
         </DialogActions>
       </BootstrapDialog>

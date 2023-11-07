@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, ButtonGroup, DialogContent, FormLabel, IconButton, InputBase, Paper, styled } from '@mui/material';
@@ -65,7 +65,8 @@ const mail_send=useApi(API_URLS.compose);
   //function to handle to mail details
   const handleChange=(e)=>{
   setMail({...mail,[e.target.name]:e.target.value});
-  console.log(mail)
+  console.log(mail);
+  props.setdatafromChild({...mail});
     }
 
   //function to send mail
@@ -76,11 +77,33 @@ const mail_send=useApi(API_URLS.compose);
       try {
         const res= await mail_send.call(mail,token);
         console.log(res);
-        console.log("from send")
+        console.log("from send");
       } catch (error) {        
         console.log(error);
       }
     }
+
+useEffect(()=>{
+if(props.value){
+  
+  document.getElementById('to').value=props.value.to||"";
+  document.getElementById('subject').value=props.value.subject||"";
+  document.getElementById('content').value=props.value.content||"";
+  
+if(props.setClicked){
+
+  document.getElementById('send').onclick=function(){
+
+    props.setClicked(true);
+    console.log("from mail");
+  }
+}
+
+}
+
+
+},[])
+  
 
   return (
     <Box
@@ -102,6 +125,10 @@ const mail_send=useApi(API_URLS.compose);
     name="to"
     id='to'
     onChange={handleChange}
+    maxRows={10}
+    style={{width:'100%'}}
+    
+     
     />
       </ToField>
       
@@ -111,17 +138,22 @@ const mail_send=useApi(API_URLS.compose);
     name="subject"
     id='subject'
     onChange={handleChange}
+    style={{width:'100%'}}
     />
 
       </ToField>
       <ToField >
       
-      <InputBase fullWidth id="to" placeholder=''
+      <InputBase fullWidth 
+      id="content" 
+      placeholder=''
        multiline
        rows={10}
       variant="standard" 
       name='content'
+     
       onChange={handleChange}
+      
       />
       </ToField>
        {file&&<p >
@@ -146,6 +178,7 @@ const mail_send=useApi(API_URLS.compose);
             <ButtonGroup>
           <Button autoFocus   variant="contained" color="primary"
           onClick={handleSend}
+          id='send'
           >
             Send  
           </Button>
@@ -183,8 +216,13 @@ const ToField=styled(Box)({
    gap:10,
     borderBottom:"1px solid rgba(0, 0, 0, 0.12)",
     borderRadius:0,
-    marginBottom:10
+    marginBottom:10,
+    "input":{
+      width:'100%',
+    }
 
+    
+  
 });
 
 const FormField=styled(Box)({

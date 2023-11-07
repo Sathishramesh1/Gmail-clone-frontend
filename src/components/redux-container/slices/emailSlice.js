@@ -40,19 +40,54 @@ important:[]
            
        });
 
+       },
 
-       }
+    //function to delete
+     setDelete:(state,action)=>{
+    
+     // Check if the message with the specified _id is present in the send array
+  const messageToDelete = state.send.find((message) => message._id === action.payload);
 
-    //function to find mail clicked inbox
+  // If the message is found, filter it out and return a new state object
+  if (messageToDelete) {
+    const updatedSend = state.send.filter((message) => message._id !== action.payload);
+    return {
+      ...state,
+      send: updatedSend,
+    };
+  }else if(state.inbox.some((message)=>message._id==action.payload)){
+    const updatedInbox = state.inbox.filter((message) => message._id !== action.payload);
+    return {
+      ...state,
+      inbox: updatedInbox,
+    };
 
-        
-              
+  }else if(state.draft.some((message)=>message._id==action.payload)){
+    const updatedDraft = state.draft.filter((message) => message._id !== action.payload);
+    return {
+      ...state,
+      draft: updatedDraft,
+    };
 
-    }
+  }
 
+//   If the message is not found, return the unchanged state
+  return state;
+
+     },
+         
+    
+    setDraft:(state,action)=>{
+
+    action.payload.forEach(element => {
+    state.draft.every((msg)=>element._id!==msg._id) ? state.draft.push(element):null     
+       });
+
+       },
+    },    
 
 });
 
 
-export const {setToken,getToken,setInbox,setSend}=emailSlice.actions
+export const {setToken,getToken,setInbox,setSend,setDelete,setDraft}=emailSlice.actions
 export default emailSlice.reducer;
