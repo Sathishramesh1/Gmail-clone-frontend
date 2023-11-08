@@ -10,7 +10,7 @@ import { ListItemButton } from '@mui/material';
 import RigthSideIcon from './components/RigthSideIcon';
 import LeftIconBar from './components/SideBars/LeftIconBar';
 import MailHeader from './components/MailComponent/MailHeader';
-import Inbox from './components/Inbox';
+import Inbox from './pages/Inbox';
 import { Route, Routes } from 'react-router-dom';
 import InboxIcon from '@mui/icons-material/Inbox';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
@@ -172,7 +172,8 @@ const LayoutWrapper=styled(Box)({
      borderRadius:'20px',
      borderTopLeftRadius:0,
      borderTopRightRadius:0 ,
-     overflowY:'scroll'
+     overflowY:'scroll',
+     flexWrap:'nowrap'
    
    });
    
@@ -182,5 +183,5 @@ const LayoutWrapper=styled(Box)({
       display:'flex',
       flexDirection:'column',
       width:'auto',
-      flexShrink:1,
+      
    })

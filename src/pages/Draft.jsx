@@ -12,10 +12,13 @@ import useApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
 import { setDraft } from '../components/redux-container/slices/emailSlice';
 import CustomizedDialogs from '../components/Dialog';
+import { setStartoggler,setImportanttoggler } from '../components/redux-container/slices/emailSlice';
+
 
 
 function Draft() {
-    const state=useSelector((state)=>state.email);
+
+  const state=useSelector((state)=>state.email);
 const {draft}=state;
 const token=useSelector((state)=>state.email.user.token);
 const dispatch=useDispatch();
@@ -24,6 +27,8 @@ const navigate=useNavigate();
 const getDraftMail=useApi(API_URLS.getDraftEmail);
 const toggler=useApi(API_URLS.toggleStarredEmail);
 const mailDelete=useApi(API_URLS.deleteEmail);
+const ImportantLabel=useApi(API_URLS.toggleImportantEmail);
+
 
 const [open,setOpen]=useState(false);
 const [value,setValue]=useState({
@@ -32,7 +37,7 @@ const [value,setValue]=useState({
     content:''
 });
 const [click,setClicked]=useState(false);
-const [messageid,setMessageid]=useState(null);
+const [messageId,setMessageid]=useState(null);
 
 
 const handleClose=()=>{
@@ -58,13 +63,12 @@ const fetchdata=async()=>{
   }
 
 
-
-
 const handleClick=(event)=>{
- setOpen(true);
+ 
 let messageid=event.target.id;
 
 if(messageid){
+  setOpen(true);
     setMessageid(messageid);
    const editedmail=draft.find((message)=>message._id==messageid);
    setValue({...value,to:editedmail.to,subject:editedmail.subject
@@ -73,26 +77,58 @@ if(messageid){
 
 }else{
   messageid=event.target.parentElement.id
+  setOpen(true);
+    setMessageid(messageid);
+   const editedmail=draft.find((message)=>message._id==messageid);
+   setValue({...value,to:editedmail?.to,subject:editedmail?.subject
+,content:editedmail?.content
+});
  
 }
 
 }
 
 //
-const toggleStarredMail=async()=>{
+const toggleStarredMail=async(event)=>{
+  event.stopPropagation()
 
 try {
-  const params='653e82ba81a6bb3977f4a943'
-  console.log(token,"jwt");
-  let res=await toggler.call({},token,params);
-  console.log(res);
+  const messageid=event.target.closest('.row').children[1].id;
+  console.log(messageid);
+  const params=messageid  
+    console.log(token,"jwt");
+    dispatch(setStartoggler(params));
+   
+    let res=await toggler.call({},token,params);
+    console.log(res);
   
 } catch (error) {
  console.log(error);     
 }
 }
 
-//
+//function for important label
+const toggleImportantMail=async(event)=>{
+  event.stopPropagation();
+ 
+  try {
+    const messageid=event.target.closest('.row').children[1].id;
+  console.log(messageid);
+  const params=messageid  ;
+   
+    dispatch(setImportanttoggler(params));
+    let res=await ImportantLabel.call({},token,params);
+    console.log(res);
+    
+  } catch (error) {
+   console.log(error);     
+  }
+}
+
+
+
+
+//function to handle delete
 const handleDelete=async(event)=>{
     
 try {
@@ -130,7 +166,7 @@ if(click){
        console.log(res);
       dispatch(setDelete(id));
     }
-     autoDelete(messageid);
+     autoDelete(messageId);
     }
     
     },[click]);
@@ -162,14 +198,13 @@ if(click){
         >
         <StarBorder
           fontSize="small"
-          style={{ }}
           
         />
         </IconButton>
    )}  
 
    {message.important?(
-    <IconButton >
+    <IconButton onClick={toggleImportantMail} >
     <LabelImportantIcon
     style={{  color: "#FADA5E" }}
     
@@ -178,9 +213,8 @@ if(click){
     
     
    ):(
-    <IconButton>
+    <IconButton onClick={toggleImportantMail}>
     <LabelImportantOutlinedIcon
-    style={{}}
     />
     </IconButton>
    )
@@ -189,7 +223,7 @@ if(click){
           <Message  id={message._id}  >
           <div >{message.sender_name||message.reciver_name}</div>
          <div>{message.subject}</div>
-         <div>{message.date}</div>
+         <div>{message.date.slice(0,10)}</div>
          <div >
 
           <IconButton onClick={handleDelete} className='delete'>
@@ -228,7 +262,7 @@ const MailContainer=styled(Box)({
     gridTemplateColumns:'15%  auto',
      width:'100%',
      placeItems:'center',
-     border:'1px solid blue',
+     borderBottom:'1px solid gray',
      fontSizeAdjust:'from-font',  
      "&:hover":{
       backgroundColor:'lightyellow'
@@ -241,6 +275,7 @@ const MailContainer=styled(Box)({
     gridTemplateColumns:'10% 30%  10% 5%',
     width:'100%',
     justifyContent:'space-between',
+    alignItems:'center'
     
    });
   

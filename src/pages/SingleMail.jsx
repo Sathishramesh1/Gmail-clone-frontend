@@ -10,7 +10,7 @@ import { API_URLS } from '../service/globalUrl';
 function SingleMail() {
     const {messageid,type}=useParams();
     const dispatch=useDispatch();
-    const {inbox,draft,send,trash}=useSelector((state)=>state.email);
+    const {inbox,send,trash,starred,important}=useSelector((state)=>state.email);
     // const send=useSelector((state)=>state.email.send);
     // const draft=useSelector((state)=>state.email.draft);
     // const trash=useSelector((state)=>state.email.inbox);
@@ -29,7 +29,9 @@ useEffect(()=>{
     }else if(type=='send'){
       opened= await send.find((element)=>element._id ==messageid);
       setMessage(opened);
-    }else if(type=='draft'){
+    }else if(type=='starred'){
+      opened= await starred.find((element)=>element._id ==messageid);
+      setMessage(opened);
 
     }else if(type=='trash'){
 

@@ -7,15 +7,15 @@ import Checkbox from "@mui/material/Checkbox";
 import { Star, StarBorder } from '@mui/icons-material';
 import { API_URLS } from '../service/globalUrl';
 import { useDispatch, useSelector } from 'react-redux';
-import { setInbox} from './redux-container/slices/emailSlice'
+import { setInbox} from '../components/redux-container/slices/emailSlice'
 import useApi from '../hook/useApi';
 import Layout from '../Layout';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { setDelete } from './redux-container/slices/emailSlice';
+import { setDelete } from '../components/redux-container/slices/emailSlice';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import LabelImportantOutlinedIcon from '@mui/icons-material/LabelImportantOutlined';
-
+import { setStartoggler,setImportanttoggler } from '../components/redux-container/slices/emailSlice';
 
 function Inbox() {
  
@@ -25,23 +25,13 @@ function Inbox() {
   const state=useSelector(state=>state.email);
   const {inbox}=state
   const token=localStorage.getItem('token');
-  const mailDelete=useApi(API_URLS.deleteEmail);
   
+const mailDelete=useApi(API_URLS.deleteEmail);
 const getInbox=useApi(API_URLS.getInboxEmail);
-useEffect(()=>{
+const toggler=useApi(API_URLS.toggleStarredEmail);
+const ImportantLabel=useApi(API_URLS.toggleImportantEmail);
 
-  const fetchdata=async()=>{
-    const res=await getInbox.call({},token);
-    console.log("use")
-  if(res.status){
-    const data=res.data.InboxMail;
-     dispatch(setInbox(data));
-   
-  }
-  }
- fetchdata();
- 
-},[]);
+
 
 //function to open single mail
 const handleMailClick=(event)=>{
@@ -80,6 +70,59 @@ const handleDelete=async(event)=>{
     
   }
 
+  //function star toggling
+const toggleStarredMail=async(event)=>{
+  
+  try {
+    const messageid=event.target.closest('.row').children[1].id;
+console.log(messageid);
+const params=messageid  
+  console.log(token,"jwt");
+  dispatch(setStartoggler(params));
+ 
+  let res=await toggler.call({},token,params);
+  console.log(res);
+  } catch (error) {
+   console.log(error);     
+  }
+  }
+
+  //function for important label
+  const toggleImportantMail=async(event)=>{
+    try {
+      const messageid=event.target.closest('.row').children[1].id;
+    console.log(messageid);
+    const params=messageid  
+      // console.log(token,"jwt");
+      dispatch(setImportanttoggler(params));
+      // console.log(...send);
+      let res=await ImportantLabel.call({},token,params);
+      console.log(res);
+      
+    } catch (error) {
+     console.log(error);     
+    }
+  
+  
+  }
+
+
+
+  useEffect(()=>{
+    const fetchdata=async()=>{
+      const res=await getInbox.call({},token);
+      console.log("use")
+    if(res.status){
+      const data=res.data.InboxMail;
+       dispatch(setInbox(data));
+     
+    }
+    }
+   fetchdata();
+   
+  },[]);
+  
+
 
   return (
     <Layout>
@@ -91,7 +134,9 @@ const handleDelete=async(event)=>{
          <Checkbox size='small' />
          </IconButton>
           {message.starred?(
-          <IconButton>
+          <IconButton
+          onClick={toggleStarredMail}
+          >
           <Star
           fontSize="small"
           style={{  color: "#FADA5E" }}
@@ -100,17 +145,18 @@ const handleDelete=async(event)=>{
         </IconButton>
        
       ) : (
-        <IconButton>
+        <IconButton
+        onClick={toggleStarredMail}
+        >
         <StarBorder
           fontSize="small"
           style={{  }}
-          // onClick={() => toggleStarredMail()}
         />
         </IconButton>
    )}  
 
 {message.important?(
-    <IconButton >
+    <IconButton onClick={toggleImportantMail}>
     <LabelImportantIcon
     style={{  color: "#FADA5E" }}
     
@@ -119,7 +165,7 @@ const handleDelete=async(event)=>{
     
     
    ):(
-    <IconButton>
+    <IconButton onClick={toggleImportantMail}>
     <LabelImportantOutlinedIcon
    
     />
@@ -150,10 +196,10 @@ export default Inbox
 const Row=styled(Box)({
     display:'grid',
     // gridTemplateColumns:'10% 10% auto 5%',
-    gridTemplateColumns:'15%  auto',
+    gridTemplateColumns:'15%  85%',
      width:'100%',
      placeItems:'center',
-     fontSizeAdjust:'from-font',  
+       
      "&:hover":{
       backgroundColor:'lightyellow'
      }
@@ -161,13 +207,16 @@ const Row=styled(Box)({
 });
 
 const RowContainer=styled('div')({
+  display:'flex',
+  flexDirection:'column',
     width:"100%",
     marginRight:50
 });
 
 const Icons=styled('div')({
   display:'flex',
-  alignItems:'center'
+  alignItems:'center',
+flexWrap:'nowrap',
 });
 
 const Message=styled('div')({
