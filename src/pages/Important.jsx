@@ -9,7 +9,7 @@ import { API_URLS } from '../service/globalUrl';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setImportant } from '../components/redux-container/slices/emailSlice';
+import { setImportant, setImportanttoggler, setStartoggler } from '../components/redux-container/slices/emailSlice';
 import { setDelete } from '../components/redux-container/slices/emailSlice';
 
 
@@ -19,7 +19,7 @@ function Important() {
 
 
   const state=useSelector((state)=>state.email);
-  const {important}=state;
+  const {important}=state
   const token=useSelector((state)=>state.email.user.token);
   const dispatch=useDispatch();
   const navigate=useNavigate();
@@ -27,15 +27,16 @@ function Important() {
   const getImportantMail=useApi(API_URLS.getImportantEmail);
   const toggler=useApi(API_URLS.toggleStarredEmail);
   const mailDelete=useApi(API_URLS.deleteEmail);
-  
-  
+  const ImportantLabel=useApi(API_URLS.toggleImportantEmail);
+
+    
   const fetchdata=async()=>{  
     try {
       const res=await getImportantMail.call({},token);
     if(res.status){
       console.log(res);
-      const data=res.data.filteredImportantEmails[0].importantEmails;
-       console.log(data);
+    const data=res.data.filteredImportantEmails[0]?.importantEmails;
+    console.log(data);
     dispatch(setImportant(data));
     }
       
@@ -67,12 +68,17 @@ function Important() {
   }
   
   //
-  const toggleStarredMail=async()=>{
+  const toggleStarredMail=async(event)=>{
   
   try {
-    const params='653e82ba81a6bb3977f4a943'
+
+    const messageid=event.target.closest('.row').children[1].id;
+    console.log(messageid);
+    const params=messageid  
     console.log(token,"jwt");
+    dispatch(setStartoggler(params));
     let res=await toggler.call({},token,params);
+    fetchdata();
     console.log(res);
     
   } catch (error) {
@@ -80,10 +86,8 @@ function Important() {
   }
   }
   //
-  const handleDelete=async(event)=>{
-    
+  const handleDelete=async(event)=>{  
   try {
-    
     let messageid=event.target.closest('.row').children[1].id;
   const params=messageid;
   console.log(params);
@@ -93,7 +97,8 @@ function Important() {
   if(res.status){
      const update=await getImportantMail.call({},token);
      if(update.status){
-      const data = update.data.importantEmails;
+      const data = update.data.filteredImportantEmails[0].importantEmails;
+
           dispatch(setImportant(data));
      }
   
@@ -106,15 +111,28 @@ function Important() {
     
   }
   
-  
 
+
+   //function handle label important
+const toggleImportantMail=async(event)=>{
+  try {
+    const messageid=event.target.closest('.row').children[1].id;
+  console.log(messageid);
+  const params=messageid  
+    dispatch(setImportanttoggler(params));
+    let res=await ImportantLabel.call({},token,params);
+    console.log(res); 
+    fetchdata();
+  } catch (error) {
+   console.log(error);     
+  }
+}
 
 
   return (
 
-
-    <Layout>
-      <MailContainer>
+   <Layout>
+    <MailContainer>
        {important?.map((message)=>(
         
          <Row key={message._id} className='row' onClick={handleClick} > 
@@ -145,7 +163,7 @@ function Important() {
    )}  
 
    {message.important?(
-    <IconButton >
+    <IconButton onClick={toggleImportantMail}>
     <LabelImportantIcon
     style={{  color: "#FADA5E" }}
     
@@ -154,9 +172,8 @@ function Important() {
     
     
    ):(
-    <IconButton>
+    <IconButton onClick={toggleImportantMail}>
     <LabelImportantOutlinedIcon
-   
     />
     </IconButton>
    )
@@ -181,6 +198,7 @@ function Important() {
 
        </MailContainer>
 
+    
         
     </Layout>
   )

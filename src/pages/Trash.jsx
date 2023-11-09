@@ -3,7 +3,7 @@ import Layout from '../Layout'
 
 function Trash() {
   return (
-   <Layout>
+   <Layout >
     
    </Layout>
   )

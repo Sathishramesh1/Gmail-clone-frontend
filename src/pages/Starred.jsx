@@ -45,26 +45,8 @@ if(messageid){
 
 }
 
-//
-
-//function handle label important
-const toggleImportantMail=async(event)=>{
-  try {
-    const messageid=event.target.closest('.row').children[1].id;
-  console.log(messageid);
-  const params=messageid  
-   
-    dispatch(setImportanttoggler(params));
-    
-    let res=await ImportantLabel.call({},token,params);
-    console.log(res);
-    
-  } catch (error) {
-   console.log(error);     
-  }
 
 
-}
 
 //function to handle to delete
 const handleDelete=async(event)=>{
@@ -137,12 +119,28 @@ const toggleStarredMail=async(event)=>{
    console.log(error);     
   }
   }
+
+  //function handle label important
+const toggleImportantMail=async(event)=>{
+  try {
+    const messageid=event.target.closest('.row').children[1].id;
+  console.log(messageid);
+  const params=messageid  
+   
+    dispatch(setImportanttoggler(params));
+    
+    let res=await ImportantLabel.call({},token,params);
+    fetchdata();
+    console.log(res);
+    
+  } catch (error) {
+   console.log(error);     
+  }
+
+
+}
+
   
-
-
-
-
-
 
   return (
     <Layout>
