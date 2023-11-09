@@ -19,7 +19,7 @@ import { API_URLS } from '../service/globalUrl';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from 'react-redux';
-import {setToken,getToken} from '../components/redux-container/slices/emailSlice'
+import {setToken} from '../components/redux-container/slices/emailSlice'
 
 function Copyright(props) {
   return (

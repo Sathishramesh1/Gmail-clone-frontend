@@ -1,7 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import UseApi from "../../../hook/useApi";
-import { API_URLS } from "../../../service/globalUrl";
-
 
 
 //creating cartslice
@@ -22,9 +19,7 @@ important:[]
             console.log(action.payload);
             return
         },
-        getToken:(state)=>{
-         return state.user.token
-        },
+        
         setInbox:(state,action)=>{
     
         action.payload?.forEach(element => {
@@ -116,6 +111,16 @@ important:[]
 
        },
 
+       setTrash:(state,action)=>{
+
+        action.payload?.forEach(element => {
+          state.trash.every((msg)=>element?._id!==msg?._id) ? state.trash.push(element):null 
+         
+     });
+
+      
+      },
+
        setStartoggler:(state,action)=>{
         
   if (state.send.some((message)=>message._id==action.payload)) {
@@ -171,7 +176,6 @@ important:[]
     });
     return { ...state, draft: updatedDraft,starred:updatedStarred };
 
-
   }
 
 //   If the message is not found, return the unchanged state
@@ -189,27 +193,7 @@ important:[]
             }
             return message; // Return unchanged messages
           });
-      //     let updatedImportant=[state.important];
-      //     let updatedStarred=[state.starred];
-      // if(state.important?.some((message)=>message._id==action.payload)){
-      //      updatedImportant = state.important.map(message => {
-      //       if (message._id === action.payload) {
-      //         // Toggle the starred property for the matching message
-      //         return { ...message, important: !message.important };
-      //       }
-      //       return message; // Return unchanged messages
-      //     });
-          
-      //   }else if(state.starred?.some((message)=>message._id ==action.payload)){
-      //        updatedStarred = state.starred.map(message => {
-      //         if (message._id == action.payload) {
-      //           // Toggle the starred property for the matching message
-      //           return { ...message, important: !message.important };
-      //         }
-      //         return message; // Return unchanged messages
-      //       });
-            
-      //     } 
+       
       const updatedImportant = state.important?.map(message => {
         if (message._id === action.payload) {
           // Toggle the starred property for the matching message
@@ -230,28 +214,7 @@ important:[]
             }
             return message; // Return unchanged messages
           });
-          
-      //     let updatedImportant=[state.important];
-      //     let updatedStarred=[state.starred];
-      // if(state.important?.some((message)=>message._id==action.payload)){
-      //      updatedImportant = state.important.map(message => {
-      //       if (message._id === action.payload) {
-      //         // Toggle the starred property for the matching message
-      //         return { ...message, important: !message.important };
-      //       }
-      //       return message; // Return unchanged messages
-      //     });
-          
-      //   }else if(state.starred?.some((message)=>message._id ==action.payload)){
-      //        updatedStarred = state.starred.map(message => {
-      //         if (message._id == action.payload) {
-      //           // Toggle the starred property for the matching message
-      //           return { ...message, important: !message.important };
-      //         }
-      //         return message; // Return unchanged messages
-      //       });
-            
-      //     } 
+       
       const updatedImportant = state.important?.map(message => {
         if (message._id === action.payload) {
           // Toggle the starred property for the matching message
@@ -271,27 +234,7 @@ important:[]
             }
             return message; // Return unchanged messages
           });
-      //     let updatedImportant=[state.important];
-      //     let updatedStarred=[state.starred];
-      // if(state.important.some((message)=>message._id==action.payload)){
-      //      updatedImportant = state.important.map(message => {
-      //       if (message._id === action.payload) {
-      //         // Toggle the starred property for the matching message
-      //         return { ...message, important: !message.important };
-      //       }
-      //       return message; // Return unchanged messages
-      //     });
-          
-      //   }else if(state.starred.some((message)=>message._id ==action.payload)){
-      //        updatedStarred = state.starred.map(message => {
-      //         if (message._id == action.payload) {
-      //           // Toggle the starred property for the matching message
-      //           return { ...message, important: !message.important };
-      //         }
-      //         return message; // Return unchanged messages
-      //       });
-            
-      //     }
+      
       const updatedImportant = state.important?.map(message => {
         if (message._id === action.payload) {
           // Toggle the starred property for the matching message
@@ -308,6 +251,7 @@ important:[]
 
 });
 
-
-export const {setToken,getToken,setInbox,setSend,setDelete,setDraft,setStarred, setImportant,setStartoggler,setImportanttoggler}=emailSlice.actions
+export const {setToken,setInbox,setSend,setDelete,setDraft,setStarred, setImportant,setStartoggler,setImportanttoggler, 
+  setTrash
+}=emailSlice.actions
 export default emailSlice.reducer;

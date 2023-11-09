@@ -33,19 +33,20 @@ useEffect(()=>{
       opened= await starred.find((element)=>element._id ==messageid);
       setMessage(opened);
 
-    }else if(type=='trash'){
-
+    }else if(type=='important'){
+      opened= await important.find((element)=>element._id ==messageid);
+      setMessage(opened);
     }
-    
-    
+    else if(type=='trash'){
+      opened= await trash.find((element)=>element._id ==messageid);
+      setMessage(opened);
+    }
+      
   }
 openMessage();
  
   
 },[message])
-
-  
-    
 
   return (
     <Layout>
@@ -69,9 +70,6 @@ openMessage();
      </div>
     
     ):(<p>no messsage</p>)}
-
-
-
     </MailContainer>
     </Layout>
     

@@ -92,7 +92,7 @@ export default Layout
 const LayoutWrapper=styled(Box)({
     display:"grid",
     gridTemplateRows:'auto auto',
-    
+
    
    })
    

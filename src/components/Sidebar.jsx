@@ -18,9 +18,7 @@ const Sidebar = ({openDrawer}) => {
             width:"240px",
             background: '#F5F5F5',
             borderRight:'none',
-            height: 'calc(100vh-64px)',
-
-          
+            height: 'calc(100vh-64px)',          
           
         }
       }}
