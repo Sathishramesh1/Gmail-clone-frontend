@@ -9,7 +9,7 @@ import { API_URLS } from '../service/globalUrl';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setStarred } from '../components/redux-container/slices/emailSlice';
+import { setImportanttoggler, setStarred, setStartoggler } from '../components/redux-container/slices/emailSlice';
 import { setDelete } from '../components/redux-container/slices/emailSlice';
 
 
@@ -46,22 +46,29 @@ if(messageid){
 }
 
 //
-const toggleStarredMail=async()=>{
 
-try {
- 
-  console.log(token,"jwt");
-  let res=await toggler.call({},token,params);
-  console.log(res);
-  
-} catch (error) {
- console.log(error);     
+//function handle label important
+const toggleImportantMail=async(event)=>{
+  try {
+    const messageid=event.target.closest('.row').children[1].id;
+  console.log(messageid);
+  const params=messageid  
+   
+    dispatch(setImportanttoggler(params));
+    
+    let res=await ImportantLabel.call({},token,params);
+    console.log(res);
+    
+  } catch (error) {
+   console.log(error);     
+  }
+
+
 }
-}
-//
+
+//function to handle to delete
 const handleDelete=async(event)=>{
   event.stopPropagation();
-  event.preventDefault();
 try {
   
   let messageid=event.target.closest('.row').children[1].id;
@@ -69,12 +76,15 @@ const params=messageid;
 console.log(params);
 
  const res= await mailDelete.call({},token,params);
+ 
  dispatch(setDelete(messageid));
+
  console.log(res);
 if(res.status){
    const update=await getStarredMail.call({},token);
    if(update.status){
     const data = update.data.filteredStarredEmails[0]?.starredEmails;
+    
     dispatch(setStarred(data))
    }
 
@@ -91,8 +101,8 @@ const fetchdata=async()=>{
     const res=await getStarredMail.call({},token);
     console.log(res);;
   if(res.status){
-    const data=res.data.filteredStarredEmails[0]?.starredEmails
-  console.log(data);
+  const data=res.data.filteredStarredEmails[0]?.starredEmails
+  
   dispatch(setStarred(data));
   }
     
@@ -108,6 +118,26 @@ useEffect(()=>{
 fetchdata();
 
 },[]);
+
+//function star toggling
+const toggleStarredMail=async(event)=>{
+
+  try {
+   
+    const messageid=event.target.closest('.row').children[1].id;
+    console.log(messageid);
+    const params=messageid  
+    console.log(token,"jwt");
+    dispatch(setStartoggler(params));
+    let res=await toggler.call({},token,params);
+    fetchdata();
+    console.log(res);
+    
+  } catch (error) {
+   console.log(error);     
+  }
+  }
+  
 
 
 
@@ -147,22 +177,17 @@ fetchdata();
    )}  
 
    {message.important?(
-    <IconButton >
+    <IconButton onClick={toggleImportantMail} >
     <LabelImportantIcon
-    style={{  color: "#FADA5E" }}
-    
+    style={{   color: "#FADA5E" }}
    />
-   </IconButton>
-    
-    
-   ):(
-    <IconButton>
+   </IconButton>):(
+    <IconButton onClick={toggleImportantMail}>
     <LabelImportantOutlinedIcon
-   
+
     />
     </IconButton>
-   )
-   }
+   )}
          </Icons>
           <Message  id={message._id}  >
           <div >{message.sender_name||message.reciver_name}</div>
@@ -220,7 +245,7 @@ const Message=styled('div')({
   display:'grid',
   gridTemplateColumns:'10% 30%  10% 5%',
   width:'100%',
-  justifyContent:'space-between',
+  justifyContent:'space-evenly',
   alignItems:'center',
   "& > *":{
     display:'flex',

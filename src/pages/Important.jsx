@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Layout from '../Layout'
 import { Star, StarBorder } from '@mui/icons-material';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
@@ -33,8 +33,9 @@ function Important() {
     try {
       const res=await getImportantMail.call({},token);
     if(res.status){
-      const data=res.data.importantEmails;
-    
+      console.log(res);
+      const data=res.data.filteredImportantEmails[0].importantEmails;
+       console.log(data);
     dispatch(setImportant(data));
     }
       
@@ -216,7 +217,7 @@ const Message=styled('div')({
   display:'grid',
   gridTemplateColumns:'10% 30%  10% 5%',
   width:'100%',
-  justifyContent:'space-between',
+  justifyContent:'space-evenly',
   alignItems:'center',
   "& > *":{
     display:'flex',
