@@ -10,7 +10,7 @@ import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import LabelImportantOutlinedIcon from '@mui/icons-material/LabelImportantOutlined';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { setTrash } from '../components/redux-container/slices/emailSlice';
+import { setDelete, setTrash } from '../components/redux-container/slices/emailSlice';
 
 
 
@@ -25,7 +25,7 @@ function Trash() {
   const navigate=useNavigate();
   
   const getTrashEmail=useApi(API_URLS.getTrashEmail);
-  const mailDelete=useApi(API_URLS.deleteEmail);
+  const mailDelete=useApi(API_URLS.removetrash);
   const ImportantLabel=useApi(API_URLS.toggleImportantEmail);
   
   
@@ -79,20 +79,7 @@ function Trash() {
     console.log(error);
   }}
 
-  const toggleImportantMail=async(event)=>{
-    try {
-    const messageid=event.target.closest('.row').children[1].id;
-    console.log(messageid);
-    const params=messageid  
-      console.log(token,"jwt");
-      dispatch(setImportanttoggler(params));
-      let res=await ImportantLabel.call({},token,params);
-      console.log(res);      
-    } catch (error) {
-     console.log(error);     
-    }  
-  }
-
+ 
   return (
    <Layout >
     <MailContainer>
@@ -103,13 +90,13 @@ function Trash() {
          <Checkbox size='small'/>
          </IconButton>
    {message.important?(
-    <IconButton onClick={toggleImportantMail}>
+    <IconButton >
     <LabelImportantIcon
     style={{  color: "#FADA5E" }}
    />
    </IconButton>
    ):(
-    <IconButton onClick={toggleImportantMail}>
+    <IconButton >
     <LabelImportantOutlinedIcon
     />
     </IconButton>

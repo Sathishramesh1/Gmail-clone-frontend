@@ -16,6 +16,7 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import Paper from '@mui/material/Paper';
 
 
 function Layout({children}) {
@@ -28,7 +29,7 @@ function Layout({children}) {
 
   return (
     <>
-    <LayoutWrapper style={{position:'fixed', width:'100%'}}>
+    <LayoutWrapper style={{}}>
       <Header toggleDrawer={toggleDrawer} />
       
       
@@ -89,20 +90,26 @@ export default Layout
 
 
 
-const LayoutWrapper=styled(Box)({
+const LayoutWrapper=styled(Paper)({
     display:"grid",
     gridTemplateRows:'auto auto',
-
+    position:'fixed', 
+    width:'100%',
+    
    
    })
    
    const Main=styled(Box)({
+    
      display:"grid",
      // flexDirection:'row',
      gridTemplateColumns:"0% auto 5%",
      border:'2px solid red',
-     height:'100vh',
-     // width:'100%',
+
+     height:'100%',
+     width:'100%',
+    
+     
      
     
     })
@@ -173,7 +180,9 @@ const LayoutWrapper=styled(Box)({
      borderTopLeftRadius:0,
      borderTopRightRadius:0 ,
      overflowY:'scroll',
-     flexWrap:'nowrap'
+     flexWrap:'nowrap',
+     
+     
    
    });
    

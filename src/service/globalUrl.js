@@ -70,7 +70,10 @@ export const API_URLS = {
     endpoint:"api/reset",
     method:'POST'
 
-
+  },
+  removetrash:{
+    endpoint:"mail/trashDelete",
+    method:'DELETE'
   }
   
 };

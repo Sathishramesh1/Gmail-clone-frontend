@@ -1,7 +1,6 @@
 import { AppBar, Toolbar, styled, InputBase, Box, IconButton } from "@mui/material";
 import {
   Menu as MenuIcon,
-  Search,
   Tune,
   HelpOutlineOutlined,
   SettingsOutlined,
@@ -10,41 +9,63 @@ import {
 } from "@mui/icons-material";
 import '../App.css'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import Avatar from '@mui/material/Avatar';
 
 const Header = ({ toggleDrawer }) => {
+
+
+
+const searchbar=()=>{
+
+ const searchInput= document.getElementById('search').value;
+
+
+
+}
+
+
+
   return (
     <StyledAppBar  >
       <StyledToolbar>
       <LogoWrapper>
-        <MenuIcon color="action" onClick={toggleDrawer} cursor="pointer" />
+        <IconButton onClick={toggleDrawer}>
+        <MenuIcon color="action"   />
+        </IconButton>
         <img
           src='https://ssl.gstatic.com/ui/v1/icons/mail/rfr/logo_gmail_lockup_default_1x_r5.png'
           alt="logo"
-          style={{ width: "70%", marginLeft:10 }}
+          style={{ width:"70%", marginLeft:10 }}
         />
        
         </LogoWrapper>
         
         <SearchRapper>
           <SearchRoundedIcon color="action"/>
-          <InputBase placeholder="Search mail" />
+          <InputBase placeholder="Search mail"
+          id="search"
+          name='search'
+          type="text"
+          onChange={searchbar}
+          />
           <Tune color="action" />
         </SearchRapper>
 
         <IconsWrapper>
           <Icon>
             <IconButton>
-          <HelpOutlineOutlined color="action" />
+          <HelpOutlineOutlined color="primary"  />
           </IconButton>
           <IconButton>
-          <SettingsOutlined color="action" />
+          <SettingsOutlined color="action"  />
           </IconButton>
         
           <IconButton>
-          <AppsOutlined color="action" />
+          <AppsOutlined color="action"  />
           </IconButton>
-          <IconButton>
-          <AccountCircleOutlined color="action" />
+          <IconButton  >
+          {/* <AccountCircleOutlined color="action" /> */}
+          <Avatar sx={{width:36,height:36,fontSize:14,background:'green'}}>S</Avatar>
           </IconButton>
           </Icon>
         </IconsWrapper>
@@ -99,11 +120,13 @@ const IconsWrapper = styled(Box)({
   display: "grid",
   // justifyContent: "center",
   width:"70%",
-  gridTemplateRows:"repeat(4,30)",
+  gridTemplateRows:"repeat(4,40)",
   background: "#f5f5f5",
-  marginLeft:'30%',
+  marginLeft:'20%',
  
-  " & > div":{
+  " & > *":{
+   
+   
     
   }
 });

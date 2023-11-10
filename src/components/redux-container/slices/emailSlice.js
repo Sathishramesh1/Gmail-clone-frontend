@@ -74,6 +74,14 @@ important:[]
       important:updatedImportant
     };
 
+  }else if(state.trash.some((message)=>message._id==action.payload)){
+    const updatedtrash = state.trash.filter((message) => message._id !== action.payload);
+
+    return {
+      ...state,
+       trash:updatedtrash
+    }
+
   }
 
 //   If the message is not found, return the unchanged state

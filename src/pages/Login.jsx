@@ -20,6 +20,7 @@ import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from 'react-redux';
 import {setToken} from '../components/redux-container/slices/emailSlice'
+import ResponsiveAppBar from '../components/LoginAppBar';
 
 function Copyright(props) {
   return (
@@ -113,8 +114,10 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <ResponsiveAppBar/>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
+        
         
         <Box
           sx={{
@@ -179,7 +182,7 @@ export default function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

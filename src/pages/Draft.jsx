@@ -130,7 +130,7 @@ const toggleImportantMail=async(event)=>{
 
 //function to handle delete
 const handleDelete=async(event)=>{
-    
+    event.stopPropagation();
 try {
   
   let messageid=event.target.closest('.row').children[1].id;
