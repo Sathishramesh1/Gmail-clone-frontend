@@ -66,13 +66,9 @@ const check=()=>{
 
 }
 
-
-
-
   return (
     <div >
-      
-      <BootstrapDialog
+          <BootstrapDialog
         onClose={handlex}
         aria-labelledby="customized-dialog-title"
         open={props.open}
@@ -95,38 +91,32 @@ const check=()=>{
         </IconButton>
         <DialogContent dividers>
           <MailForm handlex={handlex} setdatafromChild={setdatafromChild} value={props.value} setClicked={props.setClicked}/>
-          
-          
         </DialogContent>
         <DialogActions>
-          
-           
-        
-          
         </DialogActions>
       </BootstrapDialog>
     </div>
   );
 }
 
-const ButtonWrap=styled(Box)({
-  display:'flex',
-  alignItems:'center',
+// const ButtonWrap=styled(Box)({
+//   display:'flex',
+//   alignItems:'center',
   
  
-  "&>Button:first-child":{
-    marginLeft:10,
-    borderRadius:18
-  }
+//   "&>Button:first-child":{
+//     marginLeft:10,
+//     borderRadius:18
+//   }
 
-});
+// });
 
-const ScheduleButton=styled(NativeSelect)({
-  width:'10',
-  height:'min-content',
+// const ScheduleButton=styled(NativeSelect)({
+//   width:'10',
+//   height:'min-content',
 
-  "& > *":{
-    minWidth:10
-  }
+//   "& > *":{
+//     minWidth:10
+//   }
 
-})
+// })

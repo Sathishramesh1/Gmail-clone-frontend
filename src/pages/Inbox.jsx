@@ -1,6 +1,4 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import StarBorderIcon from "@mui/icons-material/StarBorder";
+import React, { useEffect} from 'react'
 import styled from 'styled-components';
 import { Box, IconButton,  } from '@mui/material';
 import Checkbox from "@mui/material/Checkbox";
@@ -16,6 +14,8 @@ import { setDelete } from '../components/redux-container/slices/emailSlice';
 import LabelImportantIcon from '@mui/icons-material/LabelImportant';
 import LabelImportantOutlinedIcon from '@mui/icons-material/LabelImportantOutlined';
 import { setStartoggler,setImportanttoggler } from '../components/redux-container/slices/emailSlice';
+import { MailContainer,Row,Icons,Message } from '../components/Styles/StyledComponent';
+
 
 function Inbox() {
  
@@ -106,8 +106,6 @@ const params=messageid
   
   }
 
-
-
   useEffect(()=>{
     const fetchdata=async()=>{
       const res=await getInbox.call({},token);
@@ -122,11 +120,9 @@ const params=messageid
    
   },[]);
   
-
-
   return (
     <Layout>
-    <RowContainer>
+    <MailContainer>
        {inbox?.map((message)=>(
          <Row key={message._id} onClick={handleMailClick} className='row'> 
          <Icons>
@@ -135,19 +131,15 @@ const params=messageid
          </IconButton>
           {message.starred?(
           <IconButton
-          onClick={toggleStarredMail}
-          >
+          onClick={toggleStarredMail}>
           <Star
           fontSize="small"
-          style={{  color: "#FADA5E" }}
-         
-        />
+          style={{  color: "#FADA5E" }}/>
         </IconButton>
        
       ) : (
         <IconButton
-        onClick={toggleStarredMail}
-        >
+        onClick={toggleStarredMail}>
         <StarBorder
           fontSize="small"
           style={{  }}
@@ -158,21 +150,14 @@ const params=messageid
 {message.important?(
     <IconButton onClick={toggleImportantMail}>
     <LabelImportantIcon
-    style={{  color: "#FADA5E" }}
-    
-   />
+    style={{  color: "#FADA5E" }}/>
    </IconButton>
-    
-    
    ):(
     <IconButton onClick={toggleImportantMail}>
-    <LabelImportantOutlinedIcon
-   
-    />
+    <LabelImportantOutlinedIcon/>
     </IconButton>
-   )
-   }
-         </Icons>
+   )}
+       </Icons>
           <Message  id={message._id}  >
           <div >{message.sender_name}</div>
          <div>{message.subject}</div>
@@ -181,49 +166,46 @@ const params=messageid
          <DeleteIcon/>
          </IconButton>
          </Message>
-         
          </Row>
        ))}
-       
-</RowContainer>
+</MailContainer>
 </Layout>
-
   );
 }
 
 export default Inbox
 
-const Row=styled(Box)({
-    display:'grid',
-    // gridTemplateColumns:'10% 10% auto 5%',
-    gridTemplateColumns:'15%  85%',
-     width:'100%',
-     placeItems:'center',
+// const Row=styled(Box)({
+//     display:'grid',
+//     // gridTemplateColumns:'10% 10% auto 5%',
+//     gridTemplateColumns:'15%  85%',
+//      width:'100%',
+//      placeItems:'center',
        
-     "&:hover":{
-      backgroundColor:'lightyellow'
-     }
+//      "&:hover":{
+//       backgroundColor:'lightyellow'
+//      }
      
-});
+// });
 
-const RowContainer=styled('div')({
-  display:'flex',
-  flexDirection:'column',
-    width:"100%",
-    marginRight:50
-});
+// const MailContainer=styled('div')({
+//   display:'flex',
+//   flexDirection:'column',
+//     width:"100%",
+  
+// });
 
-const Icons=styled('div')({
-  display:'flex',
-  alignItems:'center',
-flexWrap:'nowrap',
-});
+// const Icons=styled('div')({
+//   display:'flex',
+//   alignItems:'center',
+// flexWrap:'nowrap',
+// });
 
-const Message=styled('div')({
- display:'grid',
- gridTemplateColumns:'10% 30% 10% 5%',
- width:'100%',
- justifyContent:'space-between',
- alignItems:'center'
+// const Message=styled('div')({
+//  display:'grid',
+//  gridTemplateColumns:'10% 30% 10% 5%',
+//  width:'100%',
+//  justifyContent:'space-between',
+//  alignItems:'center'
  
-})
+// })

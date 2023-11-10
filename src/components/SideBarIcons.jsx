@@ -21,7 +21,6 @@ const [open, setOpen] = useState(false);
 const handleNavigate=(elementname)=>{
  navigate(`/${elementname}`);
 
-
 }
     
 

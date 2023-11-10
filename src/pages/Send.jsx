@@ -215,7 +215,6 @@ export const Row=styled(Box)({
    placeItems:'center',
   borderBottom:'1px solid gray',
   
-   fontSizeAdjust:'from-font',  
    "&:hover":{
     backgroundColor:'lightyellow'
    }
@@ -228,10 +227,7 @@ export const Row=styled(Box)({
   width:'100%',
   justifyContent:'space-evenly',
   alignItems:'center',
-  // "& > *":{
-  //   display:'flex',
-    
-  // }
+  
   
  });
 

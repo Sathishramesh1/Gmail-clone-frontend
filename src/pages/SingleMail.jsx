@@ -64,8 +64,6 @@ openMessage();
      {message.attachment?<a href={message.attachment} target='_new'>Attachment</a> : "" }
      
     <div>
-
-
     </div>
      </div>
     
@@ -103,7 +101,6 @@ const Mailheading=styled('div')({
 });
 
 const MailDetail=styled('div')({
-
   display:'flex',
   flexDirection:'row',
   width:'100%',

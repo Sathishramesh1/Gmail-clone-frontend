@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Layout from '../Layout'
-import { MailContainer,Row,Message,Icons } from './Send'
+import { MailContainer,Row,Icons,Message } from '../components/Styles/StyledComponent';
 import { Box, Checkbox, IconButton, styled } from '@mui/material';
 import useApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
@@ -14,8 +14,6 @@ import { setDelete, setTrash } from '../components/redux-container/slices/emailS
 
 
 
-
-
 function Trash() {
 
   const state=useSelector((state)=>state.email);
@@ -26,7 +24,6 @@ function Trash() {
   
   const getTrashEmail=useApi(API_URLS.getTrashEmail);
   const mailDelete=useApi(API_URLS.removetrash);
-  const ImportantLabel=useApi(API_URLS.toggleImportantEmail);
   
   
   const fetchdata=async()=>{  
@@ -36,13 +33,10 @@ function Trash() {
       const data=res.data.message;
     console.log(data);
     dispatch(setTrash(data));
-    }
-      
+    }    
     } catch (error) {
       console.log(error);
-    }
-    
-    }
+    }}
   
   useEffect(()=>{
   fetchdata();
@@ -79,7 +73,6 @@ function Trash() {
     console.log(error);
   }}
 
- 
   return (
    <Layout >
     <MailContainer>

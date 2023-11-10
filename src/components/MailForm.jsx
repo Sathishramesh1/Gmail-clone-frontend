@@ -10,20 +10,18 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import useApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
-
-
-
-
-
+import { useDispatch, useSelector } from 'react-redux';
+import { setInbox } from './redux-container/slices/emailSlice';
 
 function MailForm(props) {
    
     const [file,setFile]=useState(null);
 
-//getting token from local storage
-const token=localStorage.getItem('token');
+    const dispatch=useDispatch();
+    const token=useSelector((state)=>state.email.user.token);
 
-    
+//getting token from local storage
+// const token=localStorage.getItem('token');
     const [mail,setMail ]=useState({
       to:'',
       subject:'',
@@ -65,7 +63,7 @@ const mail_send=useApi(API_URLS.compose);
   //function to handle to mail details
   const handleChange=(e)=>{
   setMail({...mail,[e.target.name]:e.target.value});
-  console.log(mail);
+  // console.log(mail);
   props.setdatafromChild({...mail});
     }
 
@@ -77,6 +75,7 @@ const mail_send=useApi(API_URLS.compose);
       try {
         const res= await mail_send.call(mail,token);
         console.log(res);
+          
         console.log("from send");
       } catch (error) {        
         console.log(error);
@@ -85,23 +84,18 @@ const mail_send=useApi(API_URLS.compose);
 
 useEffect(()=>{
 if(props.value){
-  
   document.getElementById('to').value=props.value.to||"";
   document.getElementById('subject').value=props.value.subject||"";
   document.getElementById('content').value=props.value.content||"";
   
 if(props.setClicked){
-
   document.getElementById('send').onclick=function(){
-
     props.setClicked(true);
-    console.log("from mail");
+    // console.log("from mail");
   }
 }
 
 }
-
-
 },[])
   
 
@@ -220,8 +214,6 @@ const ToField=styled(Box)({
     "input":{
       width:'100%',
     }
-
-    
   
 });
 
@@ -239,12 +231,12 @@ const ButtonWrap=styled(Box)({
   flexDirection:'row',
 });
 
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  overflow: "hidden",
-  width: 1
-});
+// const VisuallyHiddenInput = styled("input")({
+//   clip: "rect(0 0 0 0)",
+//   clipPath: "inset(50%)",
+//   overflow: "hidden",
+//   width: 1
+// });
 
 const Upload=styled(Button)({
      width:'min-content',

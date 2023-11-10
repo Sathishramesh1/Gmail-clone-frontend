@@ -1,17 +1,12 @@
-import React, { Children } from 'react'
+import React from 'react'
 import { useState } from 'react';
 import './App.css'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
-import { Box, List } from '@mui/material';
+import { Box } from '@mui/material';
 import styled from '@emotion/styled';
-import {Container} from '@mui/material';
-import { ListItemButton } from '@mui/material';
 import RigthSideIcon from './components/RigthSideIcon';
-import LeftIconBar from './components/SideBars/LeftIconBar';
 import MailHeader from './components/MailComponent/MailHeader';
-import Inbox from './pages/Inbox';
-import { Route, Routes } from 'react-router-dom';
 import InboxIcon from '@mui/icons-material/Inbox';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import GroupOutlinedIcon from '@mui/icons-material/GroupOutlined';
@@ -106,9 +101,9 @@ const LayoutWrapper=styled(Paper)({
      gridTemplateColumns:"0% auto 5%",
      border:'2px solid red',
 
-     height:'100%',
+    //  height:'100%',
      width:'100%',
-    
+    height:'1500px'
      
      
     
@@ -117,7 +112,7 @@ const LayoutWrapper=styled(Paper)({
       display:'flex',
       flexDirection:'column',
      
-      height:'100vh',
+      height:'100%',
       backgroundColor:"#f2f5fa"
     });
    
@@ -175,7 +170,7 @@ const LayoutWrapper=styled(Paper)({
      display: 'flex', 
      flexDirection:'column', 
      background:'#f5f5f5',
-     height:'70%',
+     height:'100%',
      borderRadius:'20px',
      borderTopLeftRadius:0,
      borderTopRightRadius:0 ,
