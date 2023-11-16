@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, styled, InputBase, Box, IconButton } from "@mui/material";
+import { AppBar, Toolbar, styled, InputBase, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import {
   Menu as MenuIcon,
   Tune,
@@ -10,8 +10,23 @@ import {
 import '../App.css'
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import Avatar from '@mui/material/Avatar';
+import { useState } from "react";
+import { removeToken } from "./redux-container/slices/emailSlice";
+import { useDispatch } from "react-redux";
 
 const Header = ({ toggleDrawer }) => {
+  const dispatch=useDispatch();
+
+  const [anchorEl, setAnchorEl] =useState(null)
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    dispatch(removeToken());
+    
+  };
 
 
 
@@ -41,14 +56,18 @@ const searchbar=()=>{
         </LogoWrapper>
         
         <SearchRapper>
+        <IconButton>
           <SearchRoundedIcon color="action"/>
+          </IconButton>
           <InputBase placeholder="Search mail"
           id="search"
           name='search'
           type="text"
           onChange={searchbar}
           />
+           <IconButton>
           <Tune color="action" />
+          </IconButton>
         </SearchRapper>
 
         <IconsWrapper>
@@ -63,10 +82,23 @@ const searchbar=()=>{
           <IconButton>
           <AppsOutlined color="action"  />
           </IconButton>
-          <IconButton  >
-          {/* <AccountCircleOutlined color="action" /> */}
+          <IconButton onClick={handleClick} >
+         
           <Avatar sx={{width:36,height:36,fontSize:14,background:'green'}}>S</Avatar>
           </IconButton>
+          <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem> Profile</MenuItem>
+        <MenuItem >My account</MenuItem>
+        <MenuItem onClick={handleClose}>Logout</MenuItem>
+      </Menu>
           </Icon>
         </IconsWrapper>
         
@@ -101,7 +133,7 @@ const SearchRapper = styled(Box)({
   marginLeft: 20,
   borderRadius: 8,
   marginRight:8,
-  
+  height:'48px',
   // width:'100% !important',
  
   display: "flex",
@@ -123,9 +155,9 @@ const IconsWrapper = styled(Box)({
   gridTemplateRows:"repeat(4,40)",
   background: "#f5f5f5",
   marginLeft:'20%',
+  
  
   " & > *":{
-   
    
     
   }

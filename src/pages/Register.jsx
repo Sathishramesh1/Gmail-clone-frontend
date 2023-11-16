@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { API_URLS } from '../service/globalUrl';
 import useApi from '../hook/useApi';
@@ -19,6 +19,8 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { PageContainer,ImageContainer,OuterContainer,defaultTheme } from '../components/Styles/StyledComponent';
+
 
 function Copyright(props) {
   return (
@@ -32,11 +34,6 @@ function Copyright(props) {
     </Typography>
   );
 }
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
-const defaultTheme = createTheme();
-
 
 
 
@@ -60,6 +57,7 @@ const validationSchema = yup.object({
 
 
 export default function SignUp() {
+ 
 const navigate=useNavigate();
 
 //calling end point from global url
@@ -97,14 +95,10 @@ const handleSubmit = async() => {
     });
   }
    
-
 } catch (error) {
     console.log(error);
 }
-
 }
-
-
 
 
 const formik = useFormik({
@@ -121,10 +115,15 @@ const formik = useFormik({
   });
 
 
-
-
   return (
     <ThemeProvider theme={defaultTheme}>
+   
+    <OuterContainer>
+    <PageContainer>
+    <CssBaseline />
+    <ImageContainer>
+    <img src='https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7965.jpg?w=740&t=st=1700032705~exp=1700033305~hmac=e410b5ac02984a6bda1c1c33c7ce69c68af4dcc7ca6e0b1f261dad34b13681db' alt='register-illustration image'/>
+    </ImageContainer>
       <Container component="main" maxWidth="xs"  > 
         <CssBaseline />
         <Box
@@ -217,8 +216,12 @@ const formik = useFormik({
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
+      </PageContainer>
+      </OuterContainer>
+    
     </ThemeProvider>
   );
 }
+

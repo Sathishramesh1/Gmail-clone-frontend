@@ -231,21 +231,16 @@ const ButtonWrap=styled(Box)({
   flexDirection:'row',
 });
 
-// const VisuallyHiddenInput = styled("input")({
-//   clip: "rect(0 0 0 0)",
-//   clipPath: "inset(50%)",
-//   overflow: "hidden",
-//   width: 1
-// });
+
 
 const Upload=styled(Button)({
      width:'min-content',
      padding:'2px',
      margin:'4px',
-     background:'grey',
+     background:'green',
      color:'white' ,
     "&:hover":{
-      background:'grey',
+     background:'green',
 
     },
     "&:focus":{

@@ -11,16 +11,18 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import useApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { PageContainer,ImageContainer,OuterContainer,defaultTheme } from '../components/Styles/StyledComponent';
 
 
 
-const defaultTheme = createTheme();
+
+
 
 export default function Reset() {
 const naviagte=useNavigate();
@@ -77,7 +79,12 @@ const getReset=useApi(API_URLS.getReset);
 }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={defaultTheme} >
+    <OuterContainer>
+    <PageContainer>
+    <ImageContainer>
+      <img src='https://img.freepik.com/free-vector/reset-password-concept-illustration_114360-7966.jpg?w=740&t=st=1700037856~exp=1700038456~hmac=34852438feee49c73b5a2b3dfd1e120887dc2d6a79825ec1d2e146a899c7df82' alt='reset-password'/>
+    </ImageContainer>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -131,6 +138,8 @@ const getReset=useApi(API_URLS.getReset);
         </Box>
         
       </Container>
+      </PageContainer>
+      </OuterContainer>
     </ThemeProvider>
   );
 }
