@@ -11,16 +11,17 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import useApi from '../hook/useApi';
 import { API_URLS } from '../service/globalUrl';
 import { toast } from 'react-toastify';
+import { PageContainer,ImageContainer,OuterContainer ,defaultTheme} from '../components/Styles/StyledComponent';
 
 
 
 
-const defaultTheme = createTheme();
+
 
 export default function Forget() {
 
@@ -59,10 +60,8 @@ const getForget=useApi(API_URLS.getForget);
         theme: "colored",
       });
 
-
     }
     
-
   //  console.log("password reset mail sent");
    } catch (error) {
     console.log(error);
@@ -76,12 +75,17 @@ const getForget=useApi(API_URLS.getForget);
   const handlechange=(e)=>{
     e.preventDefault();
     setEmail({...email,[e.target.name]: e.target.value });
-//   console.log(email);
+
 }
   
 
   return (
     <ThemeProvider theme={defaultTheme}>
+    <OuterContainer>
+    <PageContainer>
+    <ImageContainer>
+      <img src='https://img.freepik.com/free-vector/forgot-password-concept-illustration_114360-1123.jpg?w=740&t=st=1700036792~exp=1700037392~hmac=8e4fc4e1f80bac55e98121de8cfe2e745874c8753e51678f876b2f8ba62a7fa1' alt='forget-password-image'/>
+    </ImageContainer>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -98,7 +102,7 @@ const getForget=useApi(API_URLS.getForget);
           <Typography component="h1" variant="h5">
             Forget Password
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" id='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -135,8 +139,12 @@ const getForget=useApi(API_URLS.getForget);
             </Grid>
           </Box>
         </Box>
+       
         
       </Container>
+      </PageContainer>
+      </OuterContainer>
     </ThemeProvider>
   );
 }
+

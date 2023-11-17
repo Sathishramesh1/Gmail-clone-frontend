@@ -20,19 +20,13 @@ import Trash from './pages/Trash';
 function App() {
 
 const token=useSelector((state)=>state.email.user.token);
-// const [token, setToken] = useState(localStorage.getItem('token')||null);
 
-// const logout = () => {
-//   localStorage.removeItem('token');
-//   setToken('');
-// }
-  //  console.log(token)
 
 
 
   return (
     <div>
-      
+     
      <BrowserRouter>
       <Routes>
 
@@ -53,6 +47,7 @@ const token=useSelector((state)=>state.email.user.token);
       </Routes>
        </BrowserRouter>
        <ToastContainer/>
+       
        </div>
   )
 }

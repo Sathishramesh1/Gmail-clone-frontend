@@ -19,6 +19,12 @@ important:[]
             console.log(action.payload);
             return
         },
+        removeToken:(state)=>{
+          
+          state.user.token=localStorage.setItem('token',null);
+          return
+
+        },
         
         setInbox:(state,action)=>{
     
@@ -260,6 +266,6 @@ important:[]
 });
 
 export const {setToken,setInbox,setSend,setDelete,setDraft,setStarred, setImportant,setStartoggler,setImportanttoggler, 
-  setTrash
+  setTrash,removeToken
 }=emailSlice.actions
 export default emailSlice.reducer;

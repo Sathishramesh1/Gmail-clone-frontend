@@ -103,7 +103,10 @@ const LayoutWrapper=styled(Paper)({
 
     //  height:'100%',
      width:'100%',
-    height:'1500px'
+    height:'100%',
+    '@media (max-width: 600px)': {
+      height:'1450px',
+    },
      
      
     
@@ -176,6 +179,7 @@ const LayoutWrapper=styled(Paper)({
      borderTopRightRadius:0 ,
      overflowY:'scroll',
      flexWrap:'nowrap',
+     color:'black',
      
      
    

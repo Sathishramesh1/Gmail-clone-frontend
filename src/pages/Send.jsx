@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { setDelete } from '../components/redux-container/slices/emailSlice';
 import { setStartoggler } from '../components/redux-container/slices/emailSlice';
+import { MailContainer,Row,Icons,Message } from '../components/Styles/StyledComponent';
+
 
 
 function Send() {
@@ -187,9 +189,7 @@ const toggleImportantMail=async(event)=>{
          
        ))}
       
-
        </MailContainer>
-
     </Layout>
   )
 }
@@ -197,43 +197,43 @@ const toggleImportantMail=async(event)=>{
 export default Send
 
 
-export const MailContainer=styled(Box)({
-  // width:'100%',
-  height:'100%',
-  display:'flex',
-  flexDirection:'column',
-  justifyContent:'flex-start',
+// export const MailContainer=styled(Box)({
+//   // width:'100%',
+//   height:'100%',
+//   display:'flex',
+//   flexDirection:'column',
+//   justifyContent:'flex-start',
   
   
 
-});
+// });
 
-export const Row=styled(Box)({
-  display:'grid',
-  gridTemplateColumns:'15%  auto',
-   width:'100%',
-   placeItems:'center',
-  borderBottom:'1px solid gray',
+// export const Row=styled(Box)({
+//   display:'grid',
+//   gridTemplateColumns:'15%  auto',
+//    width:'100%',
+//    placeItems:'center',
+//   borderBottom:'1px solid gray',
   
-   "&:hover":{
-    backgroundColor:'lightyellow'
-   }
+//    "&:hover":{
+//     backgroundColor:'lightyellow'
+//    }
    
-});
+// });
 
- export const Message=styled('div')({
-  display:'grid',
-  gridTemplateColumns:'10% 30%  10% 5%',
-  width:'100%',
-  justifyContent:'space-evenly',
-  alignItems:'center',
+//  export const Message=styled('div')({
+//   display:'grid',
+//   gridTemplateColumns:'10% 30%  10% 5%',
+//   width:'100%',
+//   justifyContent:'space-evenly',
+//   alignItems:'center',
   
   
- });
+//  });
 
 
- export const Icons=styled('div')({
-  display:'flex',
-  alignItems:'center',
-  flexShrink:'1'
-});
+//  export const Icons=styled('div')({
+//   display:'flex',
+//   alignItems:'center',
+//   flexShrink:'1'
+// });

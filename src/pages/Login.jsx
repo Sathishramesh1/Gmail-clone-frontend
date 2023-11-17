@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, keyframes, styled, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import {useState} from 'react'
 import useApi from '../hook/useApi';
@@ -20,7 +20,7 @@ import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from 'react-redux';
 import {setToken} from '../components/redux-container/slices/emailSlice'
-import ResponsiveAppBar from '../components/LoginAppBar';
+import { PageContainer,ImageContainer,OuterContainer,defaultTheme } from '../components/Styles/StyledComponent';
 
 function Copyright(props) {
   return (
@@ -35,9 +35,7 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
 
 export default function SignIn() {
 
@@ -58,14 +56,15 @@ export default function SignIn() {
     event.preventDefault();
     try {
      
-        //  toast.loading("Please wait...",{
-        //     position: toast.POSITION.TOP_CENTER });
+         toast.loading("Please wait...",{
+            position: toast.POSITION.TOP_CENTER });
 
   const res= await getlogin.call(user,'');
   
      console.log(res);
   
         event.target.reset();
+        toast.dismiss();
         if(res.status){
           const token=res.data.jwttoken
           dispatch(setToken(token));
@@ -113,12 +112,18 @@ export default function SignIn() {
     }
 
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <ResponsiveAppBar/>
-      <Container component="main" maxWidth="xs">
+     <ThemeProvider theme={defaultTheme}>
+     <OuterContainer>
+     <PageContainer >
+     <CssBaseline />
+     <ImageContainer>
+      <img  src='https://img.freepik.com/free-vector/global-data-security-personal-data-security-cyber-data-security-online-concept-illustration-internet-security-information-privacy-protection_1150-37336.jpg?w=740&t=st=1700028594~exp=1700029194~hmac=9511389d44aede87172248738a36d9dde2c247e89b1d6add191ce2dd8c2ac794'/>
+      </ImageContainer>  
+            <Container  maxWidth="xs" component="main">
         <CssBaseline />
-        
-        
+       
+          
+       
         <Box
           sx={{
             marginTop: 8,
@@ -127,9 +132,14 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
+         <Typography component="h1" variant="h5">
+            Welcome to Gmail Clone
+          </Typography>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
+        
+          
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
@@ -184,6 +194,10 @@ export default function SignIn() {
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
+      </PageContainer> 
+      </OuterContainer>
     </ThemeProvider>
+    
+    
   );
 }
